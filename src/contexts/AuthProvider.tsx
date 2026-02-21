@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback, type ReactNode } from "react";
 import { supabase } from "@/lib/supabase";
 import type { User, Session } from "@supabase/supabase-js";
 import type { UserRole, Profile } from "@/types";
-import { AuthContext, type AuthContextType } from "./AuthContextContext";
+import { AuthContext } from "./AuthContext";
 
 export function AuthProvider({ children }: { children: ReactNode }) {
     const [state, setState] = useState<{
@@ -87,4 +87,3 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         </AuthContext.Provider>
     );
 }
-
