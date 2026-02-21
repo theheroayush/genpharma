@@ -53,13 +53,16 @@ export default function OrdersPage() {
     });
   };
 
-  const counts = useMemo(() => ({
-    all: orders.length,
-    processing: orders.filter((o) => o.status === "processing").length,
-    assembled: orders.filter((o) => o.status === "assembled").length,
-    shipped: orders.filter((o) => o.status === "shipped").length,
-    delivered: orders.filter((o) => o.status === "delivered").length,
-  }), [orders]);
+  const counts = useMemo(() => {
+    return orders.reduce((acc, order) => {
+      acc.all++;
+      if (order.status === "processing") acc.processing++;
+      else if (order.status === "assembled") acc.assembled++;
+      else if (order.status === "shipped") acc.shipped++;
+      else if (order.status === "delivered") acc.delivered++;
+      return acc;
+    }, { all: 0, processing: 0, assembled: 0, shipped: 0, delivered: 0 });
+  }, [orders]);
 
   return (
     <>
