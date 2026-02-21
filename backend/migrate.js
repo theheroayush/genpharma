@@ -7,12 +7,14 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const client = new pg.Client({
-    host: "db.kghhzhipheuhicrhahgs.supabase.co",
-    port: 5432,
-    database: "postgres",
-    user: "postgres",
-    password: "Ayush12padh@",
-    ssl: { rejectUnauthorized: false },
+    host: process.env.DB_HOST || "db.kghhzhipheuhicrhahgs.supabase.co",
+    port: parseInt(process.env.DB_PORT || "5432", 10),
+    database: process.env.DB_NAME || "postgres",
+    user: process.env.DB_USER || "postgres",
+    password: process.env.DB_PASSWORD,
+    ssl: process.env.DB_SSL_CA
+        ? { rejectUnauthorized: true, ca: process.env.DB_SSL_CA }
+        : { rejectUnauthorized: true },
 });
 
 async function run() {
