@@ -29,11 +29,11 @@ export default function AuditLogs() {
     }, []);
 
     const actions = [...new Set(logs.map((l) => l.action))];
+    const searchTerm = search.trim().toLowerCase();
     const filtered = logs.filter((l) => {
         if (actionFilter !== "all" && l.action !== actionFilter) return false;
-        if (search.trim()) {
-            const q = search.toLowerCase();
-            return (l.user_email || "").toLowerCase().includes(q) || l.action.toLowerCase().includes(q) || (l.details || "").toLowerCase().includes(q);
+        if (searchTerm) {
+            return (l.user_email || "").toLowerCase().includes(searchTerm) || l.action.toLowerCase().includes(searchTerm) || (l.details || "").toLowerCase().includes(searchTerm);
         }
         return true;
     });
