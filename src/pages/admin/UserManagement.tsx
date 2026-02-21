@@ -6,8 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/lib/supabase";
-import { useAuth, type Profile } from "@/hooks/useAuth";
-import { Search, CheckCircle, XCircle, Shield, UserCheck, UserX } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import type { Profile } from "@/types";
+import { Search, CheckCircle, XCircle, UserCheck, UserX } from "lucide-react";
 
 export default function UserManagement() {
     const { toast } = useToast();

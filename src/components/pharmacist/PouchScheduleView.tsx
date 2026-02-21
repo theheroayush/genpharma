@@ -3,7 +3,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Printer, Calendar } from "lucide-react";
-import type { Prescription, DaySchedule, TimeSlot, PouchItem } from "@/types";
+import type { Prescription, DaySchedule, TimeSlot } from "@/types";
 
 interface Props {
     open: boolean;
@@ -48,7 +48,7 @@ function generateSchedule(prescription: Prescription): DaySchedule[] {
     return days;
 }
 
-export function PouchScheduleView({ open, onClose, prescription, readOnly }: Props) {
+export function PouchScheduleView({ open, onClose, prescription }: Props) {
     const printRef = useRef<HTMLDivElement>(null);
     const schedule = useMemo(() => (prescription ? generateSchedule(prescription) : []), [prescription]);
 

@@ -3,7 +3,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, LogIn, UserPlus, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { useAuth, type UserRole } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
+import type { UserRole } from "@/types";
 
 const navLinks = [
   { label: "How It Works", href: "#how-it-works" },
