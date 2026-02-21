@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Guided Prescription Upload Interface - MedsNow</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#136dec",
+                        "primary-hover": "#0e5bc4",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101822",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"],
+                        "body": ["Lexend", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.75rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Lexend', sans-serif;
+        }
+        /* Overlay for camera guide */
+        .camera-overlay {
+            background: rgba(16, 24, 34, 0.4);
+            box-shadow: 0 0 0 9999px rgba(16, 24, 34, 0.6);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen flex flex-col font-display">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 py-3 lg:px-10">
+<div class="flex items-center gap-4 text-slate-900 dark:text-white">
+<div class="size-8 text-primary">
+<span class="material-symbols-outlined text-3xl">local_pharmacy</span>
+</div>
+<h2 class="text-slate-900 dark:text-white text-xl font-bold leading-tight tracking-[-0.015em]">MedsNow</h2>
+</div>
+<div class="hidden md:flex flex-1 justify-end gap-8 items-center">
+<nav class="flex items-center gap-6">
+<a class="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-medium leading-normal" href="#">Home</a>
+<a class="text-primary font-semibold text-sm leading-normal" href="#">Prescriptions</a>
+<a class="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-medium leading-normal" href="#">Lab Tests</a>
+<a class="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-medium leading-normal" href="#">Profile</a>
+</nav>
+<div class="flex gap-3">
+<button class="flex items-center justify-center rounded-lg size-10 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-xl">notifications</span>
+</button>
+<button class="flex items-center justify-center rounded-lg size-10 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-xl">shopping_cart</span>
+</button>
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 border-2 border-slate-100 dark:border-slate-800" data-alt="User profile picture of a smiling man" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAxA0fCOPH6qw7BIhfJEYQnJlqh4rZvbRx6ltzcPX-SdDFlZk92PTfCl_xTnnPoK-k4fcAhLsN_ybigJ6HGvzGrd46kbgvfptBoHpZG-n-CJZfd6XHjdQ1YWoUL6mNS_QIOazg1LM0Iz1PvgW6pwDmxmQg5GMiyP6sFYHWejQ4l-ocCxG0_INyLVxBurpDCwU-2lox6ScNQPsM4VzWHDoQEzgIWRXm4cxqaHv7G0tnayzcb8ErVA44koqpZo7S_m_Mn4_T6DdFEbXk");'></div>
+</div>
+</div>
+<div class="md:hidden">
+<button class="flex items-center justify-center rounded-lg size-10 text-slate-900 dark:text-white">
+<span class="material-symbols-outlined text-2xl">menu</span>
+</button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow flex flex-col items-center py-6 px-4 md:px-8 lg:py-10">
+<div class="w-full max-w-7xl flex flex-col gap-6">
+<!-- Header Section -->
+<div class="flex flex-col gap-2 max-w-3xl">
+<div class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 font-medium">
+<span class="material-symbols-outlined text-lg">arrow_back</span>
+<span>Back to Dashboard</span>
+</div>
+<h1 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mt-2">Upload Prescription</h1>
+<p class="text-slate-600 dark:text-slate-400 text-base md:text-lg">Align your prescription within the frame to capture a clear photo.</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 mt-4">
+<!-- Left Column: Camera Interface -->
+<div class="lg:col-span-8 flex flex-col gap-4">
+<!-- Camera Container -->
+<div class="relative w-full aspect-[4/3] bg-slate-900 rounded-xl overflow-hidden shadow-lg border border-slate-200 dark:border-slate-700 group">
+<!-- Simulated Camera Feed -->
+<div class="absolute inset-0 w-full h-full bg-cover bg-center" data-alt="Blurred background representing a desk surface seen through a camera" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCmTsnbgT8cMYidt6zOUyxcezSLCDziZXx_m5RPIg9sAztn2GxU7PnEhp1VUvZBYVGJ5-QcJvpIGZsUQG66am20rUlNIdLuwguvha3KSW4VDyYA7sHzY6sg9NccqmJP4K7JtliSfUDztyvpXgTWlTGWD_8CkF614Km_4AHbug3FO-tcvssKR4tP4Bcuqx4G1jtb-htvEKnACmqeZhiz3I5_X6sgkLW9PMj-YiF_zb1uoSjimERRZENp0tZ5S2Jpm0uAtWlhvBvjbdA");'></div>
+<!-- Alignment Overlay / Guide -->
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+<!-- This box creates the "clear" area while dimming the rest -->
+<div class="relative w-[75%] h-[80%] rounded-lg border-2 border-white/50 shadow-[0_0_0_9999px_rgba(0,0,0,0.5)]">
+<!-- Corner Markers -->
+<div class="absolute -top-0.5 -left-0.5 w-6 h-6 border-t-4 border-l-4 border-primary rounded-tl-lg"></div>
+<div class="absolute -top-0.5 -right-0.5 w-6 h-6 border-t-4 border-r-4 border-primary rounded-tr-lg"></div>
+<div class="absolute -bottom-0.5 -left-0.5 w-6 h-6 border-b-4 border-l-4 border-primary rounded-bl-lg"></div>
+<div class="absolute -bottom-0.5 -right-0.5 w-6 h-6 border-b-4 border-r-4 border-primary rounded-br-lg"></div>
+<div class="absolute bottom-4 w-full text-center">
+<span class="bg-black/60 text-white px-3 py-1 rounded-full text-sm font-medium backdrop-blur-sm">Align document here</span>
+</div>
+</div>
+</div>
+<!-- Camera Controls Overlay (Top) -->
+<div class="absolute top-4 right-4 flex gap-2">
+<button class="flex items-center justify-center size-10 rounded-full bg-black/40 text-white hover:bg-black/60 backdrop-blur-md transition-all" title="Toggle Flash">
+<span class="material-symbols-outlined">flash_on</span>
+</button>
+<button class="flex items-center justify-center size-10 rounded-full bg-black/40 text-white hover:bg-black/60 backdrop-blur-md transition-all" title="Settings">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</div>
+<!-- Action Bar -->
+<div class="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center gap-3 w-full sm:w-auto">
+<button class="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors font-semibold text-sm">
+<span class="material-symbols-outlined text-xl">image</span>
+                                Upload from Gallery
+                            </button>
+</div>
+<div class="flex items-center gap-4">
+<!-- Shutter Button -->
+<button class="size-16 rounded-full border-4 border-slate-200 dark:border-slate-700 flex items-center justify-center p-1 hover:scale-105 transition-transform">
+<div class="size-full bg-primary rounded-full shadow-lg"></div>
+</button>
+</div>
+<div class="w-full sm:w-auto flex justify-end">
+<span class="text-xs text-slate-500 dark:text-slate-400 font-medium hidden sm:block">Press spacebar to capture</span>
+</div>
+</div>
+<!-- Captured Thumbnails -->
+<div class="flex gap-3 overflow-x-auto pb-2">
+<div class="relative w-24 h-24 rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden flex-shrink-0 group">
+<div class="absolute top-1 right-1 bg-black/50 text-white rounded-full p-0.5 cursor-pointer hover:bg-red-500 transition-colors">
+<span class="material-symbols-outlined text-sm">close</span>
+</div>
+<div class="w-full h-full bg-cover bg-center" data-alt="Thumbnail of a prescription paper" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCInG51TPLxC0kEphKHg-j67KwEmrGsXBhsG7QFGamxdzc7gRykIqhggKbZYu4CEHZDJF9-lH860vzd2cOl4-d2Jq2Lu9HnYvf7lNKqH2P9wh2hjiDyn2T514dRWWRKuRhaTs053v4Ns2q1tvqE_ykCcYgEKMbMIRYcex7AIoDBeKdjqkGW1SqcQX_dK7FYBK_eZdSm9vKOu5QuY9OsBJfO_snibB6pdpCSQQmZAsUKuatD7VwpY9dlYN3sKtAA1DjQkxuzJQTBjuM");'></div>
+</div>
+<!-- Add Page Placeholder -->
+<button class="w-24 h-24 rounded-lg border-2 border-dashed border-slate-300 dark:border-slate-600 flex flex-col items-center justify-center gap-1 text-slate-500 dark:text-slate-400 hover:border-primary hover:text-primary transition-colors flex-shrink-0">
+<span class="material-symbols-outlined">add_a_photo</span>
+<span class="text-xs font-medium">Add Page</span>
+</button>
+</div>
+</div>
+<!-- Right Column: Guidelines & Review -->
+<div class="lg:col-span-4 flex flex-col gap-6">
+<!-- Steps Card -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">Tips for a good photo</h3>
+<div class="flex flex-col gap-4">
+<!-- Step 1 -->
+<div class="flex gap-4 items-start">
+<div class="size-10 rounded-full bg-primary/10 text-primary flex items-center justify-center flex-shrink-0 mt-0.5">
+<span class="material-symbols-outlined">table_restaurant</span>
+</div>
+<div>
+<h4 class="font-bold text-slate-900 dark:text-white text-sm">1. Flat Surface</h4>
+<p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Place the prescription on a dark, flat table for better contrast.</p>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="flex gap-4 items-start">
+<div class="size-10 rounded-full bg-primary/10 text-primary flex items-center justify-center flex-shrink-0 mt-0.5">
+<span class="material-symbols-outlined">light_mode</span>
+</div>
+<div>
+<h4 class="font-bold text-slate-900 dark:text-white text-sm">2. Good Lighting</h4>
+<p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Ensure the room is bright. Avoid shadows falling on the text.</p>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="flex gap-4 items-start">
+<div class="size-10 rounded-full bg-primary/10 text-primary flex items-center justify-center flex-shrink-0 mt-0.5">
+<span class="material-symbols-outlined">crop_free</span>
+</div>
+<div>
+<h4 class="font-bold text-slate-900 dark:text-white text-sm">3. Full Page</h4>
+<p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Capture the entire page including corners. Do not crop the doctor's name.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Review Action -->
+<div class="bg-primary/5 dark:bg-slate-800/50 rounded-xl border border-primary/20 dark:border-slate-700 p-6 flex flex-col gap-4">
+<div class="flex justify-between items-center">
+<span class="text-sm font-semibold text-slate-700 dark:text-slate-300">Pages Captured</span>
+<span class="text-sm font-bold text-slate-900 dark:text-white bg-white dark:bg-slate-700 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-600">1</span>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400">
+                            Review your captures before submitting. Ensure text is readable.
+                        </p>
+<button class="w-full bg-primary hover:bg-primary-hover text-white font-bold py-3 px-4 rounded-lg shadow-md transition-colors flex items-center justify-center gap-2">
+<span>Review Photo</span>
+<span class="material-symbols-outlined text-lg">arrow_forward</span>
+</button>
+</div>
+<!-- Help / Support -->
+<div class="text-center mt-2">
+<button class="text-primary text-sm font-medium hover:underline flex items-center justify-center gap-1 mx-auto">
+<span class="material-symbols-outlined text-lg">help</span>
+                            Need help uploading?
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

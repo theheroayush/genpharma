@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Medication Pack Delivery Tracking</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#136dec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101822",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Lexend', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen flex flex-col">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-10 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-4 text-slate-900 dark:text-white">
+<div class="size-8 text-primary">
+<span class="material-symbols-outlined text-4xl">medication_liquid</span>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">MedPack India</h2>
+</div>
+<div class="flex flex-1 justify-end gap-8">
+<div class="hidden md:flex items-center gap-9">
+<a class="text-slate-900 dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-primary text-sm font-bold leading-normal" href="#">Track Order</a>
+<a class="text-slate-900 dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">My Prescriptions</a>
+<a class="text-slate-900 dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Profile</a>
+</div>
+<div class="flex gap-2">
+<button class="flex items-center justify-center overflow-hidden rounded-lg size-10 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="flex items-center justify-center overflow-hidden rounded-lg size-10 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow px-4 md:px-10 py-8 max-w-7xl mx-auto w-full">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2">
+<span class="bg-primary/10 text-primary text-xs font-bold px-2 py-1 rounded uppercase tracking-wide">Active Order</span>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Order #MP-2023-8921</p>
+</div>
+<h1 class="text-slate-900 dark:text-white text-3xl md:text-4xl font-black leading-tight tracking-tight">Track Your Medicine Pack</h1>
+<p class="text-slate-600 dark:text-slate-400 text-base">Estimated Delivery: <span class="font-bold text-slate-900 dark:text-white">Oct 24, 2023</span> by 6:00 PM</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-bold py-2.5 px-5 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-xl">receipt_long</span>
+<span>View Invoice</span>
+</button>
+<button class="flex items-center gap-2 bg-primary text-white font-bold py-2.5 px-6 rounded-lg hover:bg-blue-600 transition-colors shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-xl">support_agent</span>
+<span>Call for Help</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Left Column: Timeline & Pack Info -->
+<div class="lg:col-span-2 flex flex-col gap-6">
+<!-- Current Status Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+<div class="flex flex-col gap-1 rounded-xl p-5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="size-10 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-2">
+<span class="material-symbols-outlined">medication</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Pack Type</p>
+<p class="text-slate-900 dark:text-white text-lg font-bold leading-tight">Diabetes Care</p>
+</div>
+<div class="flex flex-col gap-1 rounded-xl p-5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="size-10 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-2">
+<span class="material-symbols-outlined">calendar_month</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Duration</p>
+<p class="text-slate-900 dark:text-white text-lg font-bold leading-tight">30 Days Supply</p>
+</div>
+<div class="flex flex-col gap-1 rounded-xl p-5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="size-10 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-2">
+<span class="material-symbols-outlined">autorenew</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Next Refill</p>
+<p class="text-slate-900 dark:text-white text-lg font-bold leading-tight">Nov 20</p>
+</div>
+</div>
+<!-- Timeline Section -->
+<div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+<div class="px-6 py-5 border-b border-slate-100 dark:border-slate-700">
+<h3 class="text-xl font-bold text-slate-900 dark:text-white">Delivery Status</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Real-time updates on your medicine pack journey</p>
+</div>
+<div class="p-6 md:p-8">
+<!-- Step 1: Completed -->
+<div class="relative pl-10 pb-10 group">
+<!-- Line -->
+<div class="absolute left-[15px] top-8 bottom-0 w-0.5 bg-primary"></div>
+<!-- Icon -->
+<div class="absolute left-0 top-1 size-8 rounded-full bg-primary text-white flex items-center justify-center shadow-md z-10">
+<span class="material-symbols-outlined text-lg">check</span>
+</div>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+<div>
+<h4 class="text-lg font-bold text-slate-900 dark:text-white">Prescription Verified</h4>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Verified by Dr. Sharma at 10:30 AM, Oct 22</p>
+</div>
+<span class="px-3 py-1 rounded-full bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 text-xs font-bold uppercase tracking-wider">Completed</span>
+</div>
+</div>
+<!-- Step 2: Active -->
+<div class="relative pl-10 pb-10 group">
+<!-- Line (Active part gradient to gray) -->
+<div class="absolute left-[15px] top-8 bottom-0 w-0.5 bg-gradient-to-b from-primary to-slate-200 dark:to-slate-700"></div>
+<!-- Icon -->
+<div class="absolute left-0 top-1 size-8 rounded-full bg-primary text-white flex items-center justify-center shadow-md ring-4 ring-blue-100 dark:ring-blue-900 z-10 animate-pulse">
+<span class="material-symbols-outlined text-lg">vaccines</span>
+</div>
+<div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 bg-primary/5 p-4 rounded-lg border border-primary/20">
+<div class="flex-1">
+<h4 class="text-lg font-bold text-primary">Pouch Assembly</h4>
+<p class="text-slate-600 dark:text-slate-300 text-sm mt-1">We are currently sorting your medicines into convenient pouches for Morning, Afternoon, and Night doses.</p>
+<!-- Progress visualization inside step -->
+<div class="mt-3 flex items-center gap-2">
+<div class="h-1.5 w-full bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[65%] rounded-full"></div>
+</div>
+<span class="text-xs font-bold text-primary whitespace-nowrap">65% Done</span>
+</div>
+</div>
+<span class="shrink-0 px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-900 text-primary dark:text-blue-300 text-xs font-bold uppercase tracking-wider">In Progress</span>
+</div>
+</div>
+<!-- Step 3: Pending -->
+<div class="relative pl-10 pb-10 group opacity-60">
+<!-- Line -->
+<div class="absolute left-[15px] top-8 bottom-0 w-0.5 bg-slate-200 dark:bg-slate-700"></div>
+<!-- Icon -->
+<div class="absolute left-0 top-1 size-8 rounded-full bg-white dark:bg-slate-800 border-2 border-slate-300 dark:border-slate-600 text-slate-400 flex items-center justify-center z-10">
+<span class="material-symbols-outlined text-lg">fact_check</span>
+</div>
+<div>
+<h4 class="text-lg font-bold text-slate-700 dark:text-slate-300">Quality Check</h4>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Final pharmacist review to ensure safety and accuracy.</p>
+</div>
+</div>
+<!-- Step 4: Pending -->
+<div class="relative pl-10 group opacity-60">
+<!-- Icon -->
+<div class="absolute left-0 top-1 size-8 rounded-full bg-white dark:bg-slate-800 border-2 border-slate-300 dark:border-slate-600 text-slate-400 flex items-center justify-center z-10">
+<span class="material-symbols-outlined text-lg">local_shipping</span>
+</div>
+<div>
+<h4 class="text-lg font-bold text-slate-700 dark:text-slate-300">Out for Delivery</h4>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Scheduled for tomorrow via local partner.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- What's inside section -->
+<div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm p-6">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">What's Inside Your Pack?</h3>
+<a class="text-primary text-sm font-semibold hover:underline" href="#">View Full Prescription</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="flex items-center gap-3 p-3 rounded-lg bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-700">
+<div class="size-10 rounded-full bg-white dark:bg-slate-800 shadow-sm flex items-center justify-center text-orange-500">
+<span class="material-symbols-outlined">wb_sunny</span>
+</div>
+<div>
+<p class="font-bold text-slate-900 dark:text-white">Morning Pouch</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Metformin 500mg, Amlodipine 5mg</p>
+</div>
+</div>
+<div class="flex items-center gap-3 p-3 rounded-lg bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-700">
+<div class="size-10 rounded-full bg-white dark:bg-slate-800 shadow-sm flex items-center justify-center text-indigo-500">
+<span class="material-symbols-outlined">bedtime</span>
+</div>
+<div>
+<p class="font-bold text-slate-900 dark:text-white">Night Pouch</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Atorvastatin 10mg</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Support & Info -->
+<div class="flex flex-col gap-6">
+<!-- Delivery Partner Card -->
+<div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+<div class="bg-gradient-to-r from-primary/10 to-primary/5 p-4 border-b border-slate-100 dark:border-slate-700 flex items-center justify-between">
+<h3 class="font-bold text-slate-900 dark:text-white text-sm uppercase tracking-wide">Your Delivery Partner</h3>
+<span class="material-symbols-outlined text-primary">handshake</span>
+</div>
+<div class="p-6 flex flex-col items-center text-center">
+<div class="relative mb-4">
+<div class="size-20 rounded-full bg-slate-200 overflow-hidden">
+<img alt="Portrait of a smiling Indian woman wearing a traditional outfit" class="w-full h-full object-cover" data-alt="Portrait of a smiling ASHA worker" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDD-o9aO8rIgEWTA6iOwGlt7FfhJN4xbsX8xb3-mE3DaTSiCem3RhtzJo37R9mDqYb3_HeYVze7nFVzUcj20SKJZmhpFdz4GB2NjXMkjZ-dcW-Ip_uGkDoY56BG2IRmtwAYj5e05IqJWfkvnD3QcTmvNQmMLMPE_PiRRtTWemPZ8Em6x83YUazMEuC2fl7PXw87gEg6iiLy3R14yYLV3_FGdteqy-3B9ml0Qq9ncqBbPKrnluAsJA_l4b45ryf4mpgaOP6OPmIXs3I"/>
+</div>
+<div class="absolute bottom-0 right-0 size-6 bg-green-500 border-2 border-white dark:border-slate-800 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[14px]">check_small</span>
+</div>
+</div>
+<h4 class="text-xl font-bold text-slate-900 dark:text-white">Sunita Devi</h4>
+<p class="text-slate-500 dark:text-slate-400 text-sm mb-4">ASHA Worker • Verified Partner</p>
+<div class="grid grid-cols-2 gap-3 w-full">
+<button class="flex items-center justify-center gap-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-900 dark:text-white py-2 px-4 rounded-lg font-medium transition-colors">
+<span class="material-symbols-outlined text-lg">chat</span>
+<span>Message</span>
+</button>
+<button class="flex items-center justify-center gap-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-900 dark:text-white py-2 px-4 rounded-lg font-medium transition-colors">
+<span class="material-symbols-outlined text-lg">call</span>
+<span>Call</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Delivery Address -->
+<div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm p-6">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Delivery Address</h3>
+<button class="text-primary text-sm font-semibold hover:underline">Edit</button>
+</div>
+<div class="flex gap-4">
+<div class="mt-1 text-slate-400 dark:text-slate-500">
+<span class="material-symbols-outlined">location_on</span>
+</div>
+<div>
+<p class="font-bold text-slate-900 dark:text-white">Home</p>
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mt-1">
+                                Flat 402, Krishna Residency,<br/>
+                                Sector 14, Near City Hospital,<br/>
+                                Gurgaon, Haryana, 122001
+                            </p>
+<p class="text-slate-500 dark:text-slate-400 text-xs mt-2 font-medium">Phone: +91 98765 43210</p>
+</div>
+</div>
+<div class="mt-4 pt-4 border-t border-slate-100 dark:border-slate-700">
+<div class="rounded-lg overflow-hidden h-32 w-full relative">
+<img alt="Map view of a city street showing location pin" class="w-full h-full object-cover opacity-80" data-alt="Map showing delivery location in Gurgaon" data-location="Gurgaon, India" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1JCxVZ7AKrECEJxzJQjEqIyJUIat3168Rj8_sYPk7QbtmF1OUeC_g03xtp6t9pP-QvWcFs4uDJpuv6CWDrOdif1boSsR1NwKEKSKvbieawTk9KqL8SL7sn9H5q7jl_s2Rmw31wRCM-z3is6aAm8kDmDCA283GFzLQgtVW3BKBi9nRdPsR24FYUVdq0_lTHcJ9ZZmOlIpE1FXxOUHcV-brWIFsp_p-zAHqCTsSBVkpeTU8FXKBEFcrfYp7Ss9qx4COVZrZcBdcBOw"/>
+<div class="absolute inset-0 flex items-center justify-center bg-black/10">
+<button class="bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-xs font-bold px-3 py-1.5 rounded shadow-lg flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">map</span> View on Map
+                                </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Help Banner -->
+<div class="bg-primary text-white rounded-xl shadow-lg p-6 relative overflow-hidden">
+<div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-white/10 rounded-full blur-2xl"></div>
+<div class="absolute bottom-0 left-0 -mb-4 -ml-4 w-20 h-20 bg-black/10 rounded-full blur-xl"></div>
+<div class="relative z-10">
+<div class="size-12 rounded-full bg-white/20 flex items-center justify-center mb-4 backdrop-blur-sm">
+<span class="material-symbols-outlined text-2xl">headset_mic</span>
+</div>
+<h3 class="text-xl font-bold mb-2">Need Help?</h3>
+<p class="text-blue-100 text-sm mb-4 leading-relaxed">
+                            Questions about your dosage or delivery? Our pharmacists are available 24/7.
+                        </p>
+<button class="w-full bg-white text-primary font-bold py-2.5 rounded-lg hover:bg-blue-50 transition-colors flex items-center justify-center gap-2 shadow-sm">
+<span class="material-symbols-outlined">call</span>
+<span>Call Pharmacy Support</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Simple Footer -->
+<footer class="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 py-8 px-10 mt-auto">
+<div class="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500 dark:text-slate-400">
+<p>© 2023 MedPack India. All rights reserved.</p>
+<div class="flex gap-6">
+<a class="hover:text-primary" href="#">Privacy Policy</a>
+<a class="hover:text-primary" href="#">Terms of Service</a>
+<a class="hover:text-primary" href="#">Help Center</a>
+</div>
+</div>
+</footer>
+</body></html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GenPharma Patient Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+            extend: {
+                colors: {
+                "primary": "#136dec",
+                "background-light": "#f6f7f8",
+                "background-dark": "#101822",
+                },
+                fontFamily: {
+                "display": ["Lexend", "sans-serif"]
+                },
+                borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+            },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display min-h-screen flex flex-col">
+<!-- Top Navigation -->
+<header class="bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50">
+<div class="max-w-[1200px] mx-auto px-6 h-20 flex items-center justify-between">
+<div class="flex items-center gap-3 text-primary dark:text-white">
+<div class="size-8 flex items-center justify-center bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined !text-[28px]">local_pharmacy</span>
+</div>
+<h1 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">GenPharma</h1>
+</div>
+<nav class="hidden md:flex items-center gap-1">
+<a class="px-5 py-2.5 text-slate-900 dark:text-white text-base font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors bg-slate-50 dark:bg-slate-800" href="#">Home</a>
+<a class="px-5 py-2.5 text-slate-600 dark:text-slate-400 text-base font-medium hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors" href="#">My Meds</a>
+<a class="px-5 py-2.5 text-slate-600 dark:text-slate-400 text-base font-medium hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors" href="#">Reminders</a>
+<a class="px-5 py-2.5 text-slate-600 dark:text-slate-400 text-base font-medium hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors" href="#">Profile</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="relative p-2 text-slate-600 hover:bg-slate-100 rounded-full transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2.5 bg-red-500 rounded-full border-2 border-white"></span>
+</button>
+<div class="h-10 w-10 rounded-full bg-slate-200 bg-center bg-cover border-2 border-white shadow-sm" data-alt="Portrait of an elderly Indian man smiling" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDSNStWyq25FR4a7btwblksObS_JJFA7qK7h8aezIugd9RY8fbYJ86-_ZgBgiSkOY9MKf3rEXKVhufd6_CcyjyxuKD1X7LP75F4Uyn2rsyZJ5WdgndG46V4_kAkIO6HDQIcmwU4jHPYVqdz08nP7pTrVWSBSXmKDSyVk_qMWXwJBeJhoRj5W3Pv9b65kMib0p41Dq8dlAP6CqiqP7hMwdijo6PHsCHyBdv5-jRwhy5HynaOgPZ7VyVFt8eNxCNZydx1QtYZIB9iVpw');"></div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow w-full max-w-[1200px] mx-auto px-6 py-8">
+<!-- Welcome Section -->
+<div class="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 mb-10">
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-lg font-medium mb-1">Thursday, 24 October</p>
+<h2 class="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white tracking-tight">Namaste, Mr. Sharma</h2>
+<p class="text-slate-600 dark:text-slate-400 mt-2 text-lg max-w-2xl">Here is your daily health overview. You are doing great with your schedule!</p>
+</div>
+<!-- Daily Adherence Card -->
+<div class="flex items-center gap-6 bg-white dark:bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 min-w-[280px]">
+<div class="relative size-16">
+<svg class="size-full -rotate-90" viewbox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+<path class="text-slate-100 dark:text-slate-700" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="4"></path>
+<path class="text-primary" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="85, 100" stroke-linecap="round" stroke-width="4"></path>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center flex-col">
+<span class="text-sm font-bold text-slate-900 dark:text-white">85%</span>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="text-slate-900 dark:text-white font-bold text-lg">Daily Adherence</span>
+<span class="text-green-600 dark:text-green-400 text-sm font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+                        +2% from last week
+                    </span>
+</div>
+</div>
+</div>
+<!-- Dashboard Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Left Column: Next Dose (Larger focus) -->
+<div class="lg:col-span-7 flex flex-col gap-8">
+<section>
+<h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">medication_liquid</span>
+                        Next Scheduled Dose
+                    </h3>
+<div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
+<div class="bg-primary/5 p-6 border-b border-slate-100 dark:border-slate-700 flex flex-wrap items-center justify-between gap-4">
+<div class="flex items-center gap-4">
+<div class="bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 p-3 rounded-full">
+<span class="material-symbols-outlined !text-[32px]">wb_sunny</span>
+</div>
+<div>
+<h4 class="text-3xl font-bold text-slate-900 dark:text-white">8:00 AM</h4>
+<p class="text-slate-500 dark:text-slate-400 font-medium">Morning Pouch • With Breakfast</p>
+</div>
+</div>
+<button class="bg-primary hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-semibold transition-all shadow-md hover:shadow-lg active:scale-95 flex items-center gap-2">
+<span class="material-symbols-outlined">check_circle</span>
+                                Mark as Taken
+                            </button>
+</div>
+<div class="p-6">
+<p class="text-sm text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold mb-4">Inside this pouch</p>
+<div class="space-y-4">
+<!-- Med Item 1 -->
+<div class="flex items-center gap-4 group">
+<div class="w-12 h-12 rounded-lg bg-slate-100 dark:bg-slate-700 bg-center bg-cover" data-alt="White round pill on surface" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuASxbKInDimIEDqn0yCn3ZjasPmVyeA3DbjzY3lM95XvG2XqaI7NACqf6LzK1OTw2z2W6okJef60zaVTUOspqZsAKi-uCeexQNCQBvAxi2BhcSOOOh8zEJOcHlCmQf0TtYKeNKTi64TiAPv--SYnuM2c7JuiqiNWZyiJwCklazFAEwxMVylLg27lq9KXrty59Ih1nWZ_ZQ98Np4GxLLCrBZEyPjx77WHbfihCD5Bhhfr7XlXqtfgNwC6izE06HC5BTEe-gu5T8GTH8');"></div>
+<div class="flex-1">
+<p class="text-lg font-bold text-slate-900 dark:text-white">Metformin</p>
+<p class="text-slate-500 dark:text-slate-400">500mg • 1 Tablet</p>
+</div>
+<span class="material-symbols-outlined text-slate-300">pill</span>
+</div>
+<!-- Med Item 2 -->
+<div class="flex items-center gap-4 group border-t border-slate-50 dark:border-slate-700 pt-4">
+<div class="w-12 h-12 rounded-lg bg-slate-100 dark:bg-slate-700 bg-center bg-cover" data-alt="Orange capsule pill" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBbAdsOz1rUAuUiBnP0fP3eJ_jtAcOO79aXQB91oeMSo6nPyMgSKkPpyxCN2cME-lxG9hekq_1uDPbwkyKLAV16GcCqC25Td4o2dHm2kptykx5hYiAwJr0kUsfe9zic0B2lt1Hhlg3eF5Vri2ZgGwy2_Us0YTu4hZFPUDWAkuvwM2jtuFM6cazGrT7IehBO4Bzqyspiao9el-yDDqUqz1QCrB_KjdylPPo7hAevlCmxdLIeWDOopDhrmukWM1mfP4Sw-9MeBQ4Zf60');"></div>
+<div class="flex-1">
+<p class="text-lg font-bold text-slate-900 dark:text-white">Amlodipine</p>
+<p class="text-slate-500 dark:text-slate-400">5mg • 1 Tablet</p>
+</div>
+<span class="material-symbols-outlined text-slate-300">pill</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section>
+<h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4">Health Tips for You</h3>
+<div class="bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 p-6 rounded-2xl border border-emerald-100 dark:border-emerald-800/30 flex flex-col md:flex-row gap-6 items-center">
+<div class="flex-1">
+<span class="bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300 text-xs font-bold px-3 py-1 rounded-full mb-3 inline-block">DAILY TIP</span>
+<h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Stay Hydrated with Generic Meds</h4>
+<p class="text-slate-600 dark:text-slate-300 leading-relaxed">Drinking a full glass of water with your morning pouch helps absorption and prevents stomach upset. Aim for 8 glasses today!</p>
+</div>
+<div class="size-24 bg-white dark:bg-emerald-800 rounded-full flex items-center justify-center shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-emerald-500 !text-[40px]">water_drop</span>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Quick Actions & Status -->
+<div class="lg:col-span-5 flex flex-col gap-8">
+<section>
+<h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4">Quick Actions</h3>
+<div class="grid grid-cols-1 gap-4">
+<!-- Upload Prescription -->
+<button class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 flex items-center gap-5 hover:border-primary dark:hover:border-primary transition-all group text-left">
+<div class="size-14 bg-primary/10 rounded-xl flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined !text-[32px]">add_a_photo</span>
+</div>
+<div>
+<span class="block text-lg font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">Upload New Prescription</span>
+<span class="text-slate-500 dark:text-slate-400 text-sm">Scan or upload photo</span>
+</div>
+<span class="material-symbols-outlined ml-auto text-slate-300 group-hover:text-primary">arrow_forward_ios</span>
+</button>
+<!-- Request Refill -->
+<button class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 flex items-center gap-5 hover:border-primary dark:hover:border-primary transition-all group text-left">
+<div class="size-14 bg-orange-50 dark:bg-orange-900/20 rounded-xl flex items-center justify-center text-orange-500 group-hover:bg-orange-500 group-hover:text-white transition-colors">
+<span class="material-symbols-outlined !text-[32px]">restart_alt</span>
+</div>
+<div>
+<span class="block text-lg font-bold text-slate-900 dark:text-white group-hover:text-orange-500 transition-colors">Request Refill</span>
+<span class="text-slate-500 dark:text-slate-400 text-sm">For existing medicines</span>
+</div>
+<span class="material-symbols-outlined ml-auto text-slate-300 group-hover:text-orange-500">arrow_forward_ios</span>
+</button>
+</div>
+</section>
+<section>
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-xl font-bold text-slate-900 dark:text-white">Active Order</h3>
+<a class="text-primary text-sm font-semibold hover:underline" href="#">View History</a>
+</div>
+<div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="text-xs font-bold text-slate-400 uppercase tracking-wide">Order #GP-9021</p>
+<p class="text-lg font-bold text-slate-900 dark:text-white mt-1">Monthly Refill Pack</p>
+</div>
+<span class="bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 px-3 py-1 rounded-full text-xs font-bold">IN TRANSIT</span>
+</div>
+<!-- Progress Stepper -->
+<div class="relative py-2">
+<div class="absolute left-3 top-2 bottom-2 w-0.5 bg-slate-100 dark:bg-slate-700"></div>
+<div class="flex gap-4 items-start mb-6 relative">
+<div class="z-10 size-6 rounded-full bg-green-500 flex items-center justify-center shrink-0 border-2 border-white dark:border-slate-800">
+<span class="material-symbols-outlined text-white !text-[14px]">check</span>
+</div>
+<div>
+<p class="text-sm font-semibold text-slate-900 dark:text-white">Order Confirmed</p>
+<p class="text-xs text-slate-500">Oct 22, 10:30 AM</p>
+</div>
+</div>
+<div class="flex gap-4 items-start mb-6 relative">
+<div class="z-10 size-6 rounded-full bg-green-500 flex items-center justify-center shrink-0 border-2 border-white dark:border-slate-800">
+<span class="material-symbols-outlined text-white !text-[14px]">check</span>
+</div>
+<div>
+<p class="text-sm font-semibold text-slate-900 dark:text-white">Packed &amp; Shipped</p>
+<p class="text-xs text-slate-500">Oct 23, 04:15 PM</p>
+</div>
+</div>
+<div class="flex gap-4 items-start relative">
+<div class="z-10 size-6 rounded-full bg-primary flex items-center justify-center shrink-0 ring-4 ring-blue-50 dark:ring-blue-900/30">
+<span class="size-2 bg-white rounded-full animate-pulse"></span>
+</div>
+<div>
+<p class="text-sm font-bold text-primary">Out for Delivery</p>
+<p class="text-xs text-slate-500">Expected by 6 PM Today</p>
+</div>
+</div>
+</div>
+<div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-700 flex gap-3">
+<button class="flex-1 py-2.5 px-4 rounded-lg border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-300 font-medium text-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">Track on Map</button>
+<button class="flex-1 py-2.5 px-4 rounded-lg border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-300 font-medium text-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">Support</button>
+</div>
+</div>
+</section>
+<!-- Support Banner for Seniors -->
+<div class="bg-primary text-white rounded-2xl p-6 shadow-md relative overflow-hidden">
+<div class="relative z-10">
+<h4 class="font-bold text-lg mb-2">Need help ordering?</h4>
+<p class="text-blue-100 text-sm mb-4 max-w-[80%]">Call our dedicated support line for seniors. We speak Hindi and English.</p>
+<a class="inline-flex items-center gap-2 bg-white text-primary px-4 py-2 rounded-lg font-bold text-sm hover:bg-blue-50 transition-colors" href="tel:1800-123-4567">
+<span class="material-symbols-outlined !text-[18px]">call</span>
+                            1800-123-4567
+                        </a>
+</div>
+<div class="absolute -right-6 -bottom-8 opacity-20">
+<span class="material-symbols-outlined !text-[150px]">support_agent</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="mt-auto border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 py-8">
+<div class="max-w-[1200px] mx-auto px-6 text-center">
+<p class="text-slate-500 dark:text-slate-400 text-sm">© 2023 GenPharma Healthcare Pvt Ltd. All rights reserved.</p>
+</div>
+</footer>
+</body></html>

@@ -1,0 +1,183 @@
+
+GenPharma
+Product Requirements Document
+Pre-Sorted Medicine Delivery Platform
+
+Version 2.0
+Last Updated: January 2025
+Confidential - For Internal Use Only
+
+Table of Contents
+Note: Right-click and select 'Update Field' to refresh page numbers
+
+1. Executive Summary
+GenPharma is building India's first people-first generic medicine delivery platform with innovative pre-sorted medication packs. This Product Requirements Document (PRD) outlines the comprehensive technical specifications, feature requirements, and development roadmap for building a scalable web-based application that serves chronic disease patients in Tier 2/3 cities and rural India. The platform addresses the critical problem of medication non-adherence, where 50-70% of patients in India fail to take medications as prescribed, leading to worsening health outcomes and increased healthcare costs.
+The core innovation lies in our pre-sorted medicine pack system, which organizes medications by day and time in single-serve pouches with clear labels. This eliminates confusion around complex medication schedules and significantly improves adherence rates. The platform includes a pharmacist-facing mobile application for prescription processing, pouch assembly with barcode verification, and automated label generation, as well as a patient-facing mobile application for prescription uploads, medication tracking, and multilingual pill reminders. Our technology stack is designed for near-zero hardware costs, using existing smartphones and standard laser printers, making the franchise model highly accessible.
+This document is intended for the development team and provides detailed specifications for both front-end and back-end development. It includes user stories, acceptance criteria, technical architecture, API specifications, database schema, security requirements, and deployment guidelines. The platform must support 1.5 million users within five years while maintaining 99.9% uptime and sub-200ms response times for critical operations.
+2. Product Overview
+2.1 Product Vision
+GenPharma aims to revolutionize medication adherence in India by making quality healthcare simple, affordable, and accessible to all. Our vision is rooted in the fundamental belief that medicine should never be a luxury, and we exist to serve people rather than simply sell to them. The platform specifically targets underserved populations including the elderly, economically disadvantaged, and those forgotten by the existing healthcare system.
+The product vision extends beyond mere medicine delivery to create a comprehensive healthcare ecosystem that addresses the root causes of medication non-adherence. By combining technology-driven pre-sorting with ethical, community-focused practices, GenPharma differentiates itself from competitors who primarily focus on metropolitan areas and fail to address the unique challenges faced by patients in Tier 2/3 cities and rural India.
+2.2 Core Value Proposition
+Pre-Sorted Medicine Packs: Single-serve pouches organized by day and time with clear labeling, eliminating confusion about complex medication schedules
+Radical Affordability: Quality generic medicines at 50-80% savings compared to branded alternatives, sourced directly from WHO-GMP certified manufacturers
+Smart Technology Platform: User-friendly mobile app with barcode verification, multilingual support, and automated pill reminders
+Localized Healthcare Access: Hub-and-spoke model for rural penetration with partnerships with ASHAs, CHWs, and local NGOs
+People-First Ethics: Zero tolerance for expired drugs or unethical practices with transparent pricing and genuine care for patient welfare
+2.3 Target Users
+The primary target user is chronic disease patients aged 25-60 years who require consistent, long-term medication for conditions such as diabetes, hypertension, and thyroid disorders. These users represent high-value customers with an estimated lifetime value exceeding Rs. 15,000 over a three-year retention period. Secondary users include caregivers managing family health, particularly adult children caring for elderly parents who need simplified medication management for multiple family members.
+3. Functional Requirements
+3.1 Pharmacist Platform (Mobile/Tablet App)
+The pharmacist platform serves as the operational backbone of the GenPharma system. It enables pharmacists to process prescriptions, assemble pre-sorted medication packs, and manage inventory with minimal technical expertise. The application must be designed for ease of use while maintaining strict quality control and verification protocols.
+FR-1.1: Prescription Input Module
+Description: Enable pharmacists to input prescription details including drug names, dosages, and schedules through multiple input methods
+Priority: P0 (Critical)
+Acceptance Criteria:
+System shall accept manual text input for drug names with auto-complete suggestions from master drug database
+System shall support OCR-based prescription image scanning with minimum 95% accuracy for typed prescriptions
+System shall validate drug names against approved inventory list and flag unavailable medications
+System shall allow multiple dosage frequencies per medication (e.g., twice daily, every 8 hours)
+System shall support entry of special instructions in both English and regional languages
+FR-1.2: Automated Scheduling Engine
+Description: Automatically generate medication schedules and pouch mappings based on prescription data
+Priority: P0 (Critical)
+Acceptance Criteria:
+System shall generate daily pouch mappings for up to 90 days based on prescription duration
+System shall optimize pouch assignments to minimize packaging material waste
+System shall flag potential drug interactions based on established medical databases
+System shall allow manual override of automatic scheduling with audit trail
+System shall handle time-zone variations for patients traveling across regions
+FR-1.3: Label Generation System
+Description: Generate printable labels with patient information, timing, and dosage instructions
+Priority: P0 (Critical)
+Acceptance Criteria:
+Labels shall include patient name, date, time slot, medication names, and dosages in minimum 12pt font
+System shall support label printing in 10+ regional languages with proper font rendering
+Labels shall include unique QR code linking to detailed medication information
+System shall generate batch labels for efficient printing on standard A4 sheets
+Labels shall be water-resistant and remain legible for minimum 30 days
+FR-1.4: Barcode Verification System
+Description: Real-time verification of medications during pouch assembly using barcode scanning
+Priority: P0 (Critical)
+Acceptance Criteria:
+System shall scan and verify medication barcodes within 500ms
+System shall alert pharmacist immediately if wrong medication is scanned
+System shall track batch numbers and expiry dates for each scanned medication
+System shall maintain complete audit trail of all verification events
+System shall support both camera-based and external barcode scanner input
+3.2 Patient Mobile Application
+The patient application provides a comprehensive interface for users to manage their medications, track adherence, and communicate with healthcare providers. The application must be designed for accessibility, supporting users with varying levels of technical literacy and visual impairments.
+FR-2.1: Prescription Upload
+Description: Allow patients to upload prescriptions via photo or PDF for processing
+Priority: P0 (Critical)
+Acceptance Criteria:
+System shall support image capture directly from camera with guided framing overlay
+System shall accept PDF uploads up to 10MB with automatic compression
+System shall confirm successful upload within 3 seconds
+System shall store prescription images in encrypted format
+System shall link prescriptions to corresponding orders automatically
+FR-2.2: Medication Tracking Dashboard
+The medication tracking dashboard provides patients with a comprehensive view of their medication history, upcoming refills, and adherence statistics. The interface must display information clearly and support multilingual access for users across different regions.
+FR-2.3: Pill Reminder System
+The pill reminder system delivers timely notifications to patients based on their medication schedules. Reminders must be configurable, persistent, and accessible even when the application is not actively running. The system supports multiple reminder types including push notifications, SMS, and voice calls for users with limited smartphone access.
+4. Non-Functional Requirements
+4.1 Performance Requirements
+The system must maintain high performance standards to ensure reliable service delivery to patients who depend on timely medication access. Performance requirements are defined based on expected user growth and operational demands over the five-year projection period.
+Table 1: Performance Requirements Summary
+4.2 Security Requirements
+Security is paramount for a healthcare application handling sensitive patient data and prescription information. The system must comply with all applicable Indian healthcare data protection regulations and implement industry-standard security practices to protect user privacy and prevent unauthorized access.
+Data Encryption: All data at rest and in transit must be encrypted using AES-256 and TLS 1.3 respectively
+Authentication: Multi-factor authentication required for pharmacist access; biometric support for patient app
+Access Control: Role-based access control (RBAC) with principle of least privilege
+Audit Logging: Comprehensive audit trails for all data access and modifications
+Vulnerability Management: Regular penetration testing and vulnerability assessments
+5. Technical Architecture
+5.1 System Architecture Overview
+The GenPharma platform follows a microservices architecture to ensure scalability, maintainability, and fault isolation. The architecture is designed to support the franchise model with distributed pharmacy operations while maintaining centralized control over critical functions such as inventory management, prescription verification, and quality assurance.
+The system comprises several key components: a customer-facing web application and mobile apps (iOS and Android), a pharmacist operations application, backend API services, database infrastructure, and integration layers for third-party services including payment gateways, SMS providers, and telemedicine platforms. The architecture supports horizontal scaling to accommodate the projected growth to 1.5 million users within five years.
+5.2 Technology Stack
+Table 2: Technology Stack Selection
+6. Database Schema
+The database schema is designed to support the core business functions while maintaining data integrity, enabling efficient queries, and supporting future scalability. The schema follows normalization principles while incorporating strategic denormalization for performance-critical operations.
+6.1 Core Entities
+Users: Patient and pharmacist accounts with authentication credentials and profile information
+Prescriptions: Uploaded prescription images with OCR-extracted data and verification status
+Medications: Master drug database with generic names, brand equivalents, dosages, and interaction data
+Orders: Customer orders with line items, pricing, delivery information, and status tracking
+PouchConfigurations: Pre-sorting configurations mapping medications to pouches by date and time
+Inventory: Stock levels by pharmacy location with batch tracking and expiry management
+Subscriptions: Patient subscription records with billing cycles and benefit tracking
+Franchises: Franchise partner information with operational metrics and revenue sharing
+7. API Specifications
+The GenPharma API follows RESTful design principles with JSON request and response bodies. All API endpoints require authentication using JWT tokens, and rate limiting is applied to prevent abuse. The API documentation is maintained using OpenAPI 3.0 specification and is accessible via Swagger UI for development testing.
+7.1 Authentication Endpoints
+POST /api/v1/auth/register
+Registers a new user account. Accepts phone number, email, and password. Sends OTP verification for phone numbers.
+POST /api/v1/auth/login
+Authenticates user and returns JWT token. Supports phone/email login with password or OTP.
+POST /api/v1/auth/refresh
+Refreshes expired JWT token using valid refresh token.
+7.2 Prescription Endpoints
+POST /api/v1/prescriptions/upload
+Uploads prescription image or PDF. Returns processing status and extracted medication list.
+GET /api/v1/prescriptions/{id}
+Retrieves prescription details including OCR results and verification status.
+GET /api/v1/prescriptions/user/{userId}
+Lists all prescriptions for a user with pagination support.
+8. Development Roadmap
+8.1 Phase 1: Foundation (Months 1-3)
+The foundation phase establishes the core infrastructure and essential features required for initial launch. Development focuses on building a minimum viable product that demonstrates the core value proposition while maintaining high quality standards for a healthcare application.
+Core database schema implementation with migration scripts
+Authentication service with JWT and OTP support
+Basic prescription upload and storage functionality
+Master drug database population with 500+ medications
+Basic pharmacist mobile app with prescription entry
+Label generation and printing functionality
+8.2 Phase 2: Core Features (Months 4-6)
+The core features phase builds upon the foundation to deliver the complete pre-sorted pack workflow. This phase includes barcode verification, pouch configuration, and the patient mobile application with pill reminders.
+Barcode verification system with real-time validation
+Automated pouch scheduling and configuration engine
+Patient mobile app (iOS and Android) with core features
+Pill reminder notifications with local and push support
+Order management and delivery tracking
+Integration with payment gateways (UPI, cards, wallets)
+8.3 Phase 3: Enhancement (Months 7-12)
+The enhancement phase introduces advanced features that differentiate GenPharma from competitors and improve user experience. This includes multilingual support, telemedicine integration, and the franchise management portal.
+Multilingual support for 10+ regional languages
+Voice-enabled prescription capture for accessibility
+Medication interaction checker with alert system
+Family account management for caregivers
+Franchise management portal with analytics
+Telemedicine consultation integration
+9. Quality Assurance
+Quality assurance for the GenPharma platform must address both software quality and healthcare-specific compliance requirements. The QA strategy encompasses automated testing, manual testing, security testing, and regulatory compliance verification.
+9.1 Testing Strategy
+Unit Testing: Minimum 80% code coverage for all business logic with Jest and React Testing Library
+Integration Testing: API integration tests for all endpoints with realistic data scenarios
+End-to-End Testing: Critical user journeys tested with Cypress for web and Detox for mobile
+Performance Testing: Load testing with k6 to verify system capacity under expected load
+Security Testing: Quarterly penetration testing and continuous vulnerability scanning
+10. Deployment and Operations
+The deployment strategy follows DevOps best practices with continuous integration and continuous deployment (CI/CD) pipelines. Infrastructure is managed as code using Terraform, ensuring consistent and reproducible deployments across environments.
+10.1 Environment Strategy
+Development: Developer sandbox environments with isolated databases
+Staging: Pre-production environment for QA testing and demo
+Production: Multi-region deployment with automatic failover
+10.2 Monitoring and Alerting
+Comprehensive monitoring is essential for maintaining service quality and rapid incident response. The monitoring stack includes application performance monitoring, infrastructure metrics, log aggregation, and synthetic transaction monitoring.
+Application Performance Monitoring with New Relic or Datadog
+Infrastructure monitoring with AWS CloudWatch
+Log aggregation with ELK stack or CloudWatch Logs
+PagerDuty integration for critical alert escalation
+11. Success Metrics and KPIs
+The success of the GenPharma platform will be measured against specific key performance indicators that reflect both business objectives and technical performance. These metrics should be tracked continuously and reviewed in monthly business reviews.
+Table 3: Key Performance Indicators
+12. Appendix
+12.1 Glossary
+Pre-Sorted Pack: A pouch containing medications organized by specific date and time for consumption
+Pouch Configuration: The mapping of medications to pouches based on prescription schedule
+WHO-GMP: World Health Organization Good Manufacturing Practice certification
+ASHA: Accredited Social Health Activist - community health workers in India
+CHW: Community Health Worker
+12.2 Document Revision History
+Table 4: Document Revision History
