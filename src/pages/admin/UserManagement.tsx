@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/lib/supabase";
-import { useAuth, type Profile } from "@/contexts/AuthContext";
+import { useAuth, type Profile } from "@/hooks/useAuth";
 import { Search, CheckCircle, XCircle, Shield, UserCheck, UserX } from "lucide-react";
 
 export default function UserManagement() {

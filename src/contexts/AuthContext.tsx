@@ -1,37 +1,16 @@
-import { createContext, useContext, useEffect, useState, useCallback, type ReactNode } from "react";
+import { useEffect, useState, useCallback, type ReactNode } from "react";
 import { supabase } from "@/lib/supabase";
 import type { User, Session } from "@supabase/supabase-js";
-
-export type UserRole = "patient" | "pharmacist" | "admin";
-
-export interface Profile {
-    id: string;
-    full_name: string;
-    email: string;
-    role: UserRole;
-    approved: boolean;
-    phone: string;
-    created_at: string;
-}
-
-interface AuthState {
-    user: User | null;
-    profile: Profile | null;
-    session: Session | null;
-    loading: boolean;
-}
-
-interface AuthContextType extends AuthState {
-    login: (email: string, password: string) => Promise<{ error?: string }>;
-    register: (email: string, password: string, fullName: string, role: UserRole) => Promise<{ error?: string }>;
-    logout: () => Promise<void>;
-    refreshProfile: () => Promise<void>;
-}
-
-const AuthContext = createContext<AuthContextType | null>(null);
+import type { UserRole, Profile } from "@/types";
+import { AuthContext, type AuthContextType } from "./AuthContextContext";
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-    const [state, setState] = useState<AuthState>({
+    const [state, setState] = useState<{
+        user: User | null;
+        profile: Profile | null;
+        session: Session | null;
+        loading: boolean;
+    }>({
         user: null, profile: null, session: null, loading: true,
     });
 
@@ -109,8 +88,3 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     );
 }
 
-export function useAuth() {
-    const ctx = useContext(AuthContext);
-    if (!ctx) throw new Error("useAuth must be used within AuthProvider");
-    return ctx;
-}

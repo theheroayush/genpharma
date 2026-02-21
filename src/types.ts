@@ -1,4 +1,15 @@
 // ─── Shared TypeScript Types ───
+export type UserRole = "patient" | "pharmacist" | "admin";
+
+export interface Profile {
+    id: string;
+    full_name: string;
+    email: string;
+    role: UserRole;
+    approved: boolean;
+    phone: string;
+    created_at: string;
+}
 
 export interface Drug {
     id: string;

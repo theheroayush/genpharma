@@ -88,7 +88,7 @@ export default function AuditLogs() {
                                         </td>
                                         <td className="py-3 px-3 text-xs">{log.user_email || "System"}</td>
                                         <td className="py-3 px-3">
-                                            <Badge variant={actionColor(log.action) as any} className="text-xs">{log.action}</Badge>
+                                            <Badge variant={actionColor(log.action) as "default" | "destructive" | "outline" | "secondary"} className="text-xs">{log.action}</Badge>
                                         </td>
                                         <td className="py-3 px-3 text-xs text-muted-foreground hidden md:table-cell max-w-xs truncate">{log.details || "—"}</td>
                                     </tr>
