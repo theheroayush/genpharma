@@ -1,4 +1,5 @@
 # GenPharma
+- Status: Deployment Synced & Environment Variables Configured
 
 **India's People-First Pharmacy** — Pre-sorted medicine packs delivered to your door with 50-80% savings on quality generics.
 
