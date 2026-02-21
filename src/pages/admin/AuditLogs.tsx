@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -28,15 +28,15 @@ export default function AuditLogs() {
         })();
     }, []);
 
-    const actions = [...new Set(logs.map((l) => l.action))];
-    const filtered = logs.filter((l) => {
+    const actions = useMemo(() => [...new Set(logs.map((l) => l.action))], [logs]);
+    const filtered = useMemo(() => logs.filter((l) => {
         if (actionFilter !== "all" && l.action !== actionFilter) return false;
         if (search.trim()) {
             const q = search.toLowerCase();
             return (l.user_email || "").toLowerCase().includes(q) || l.action.toLowerCase().includes(q) || (l.details || "").toLowerCase().includes(q);
         }
         return true;
-    });
+    }), [logs, actionFilter, search]);
 
     const actionColor = (a: string) => {
         if (a.includes("login")) return "info";
