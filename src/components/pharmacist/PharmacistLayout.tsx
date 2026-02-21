@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { cn } from "@/lib/utils";
+import { cn, getInitials } from "@/lib/utils";
 import { useAuth } from "@/hooks/useAuth";
 
 const navItems = [
@@ -21,7 +21,7 @@ export default function PharmacistLayout({ children }: Props) {
   const { profile, logout } = useAuth();
 
   const handleLogout = async () => { await logout(); navigate("/"); };
-  const initials = profile?.full_name?.split(" ").map((w) => w[0]).join("").substring(0, 2) || "PH";
+  const initials = getInitials(profile?.full_name, "PH");
   const displayName = profile?.full_name || "Pharmacist";
 
   return (

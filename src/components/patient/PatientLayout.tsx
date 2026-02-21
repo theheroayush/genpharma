@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "@/lib/utils";
+import { cn, getInitials } from "@/lib/utils";
 import { useAuth } from "@/hooks/useAuth";
 
 const navLinks = [
@@ -64,7 +64,7 @@ export default function PatientLayout({ children }: Props) {
                             className="h-9 w-9 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-sm hover:bg-primary/20 transition-colors"
                             title={`Logout (${displayName})`}
                         >
-                            {displayName.split(" ").map(w => w[0]).join("").substring(0, 2)}
+                            {getInitials(displayName)}
                         </button>
 
                         {/* Mobile hamburger */}

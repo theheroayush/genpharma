@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { useToast } from "@/components/ui/use-toast";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { getInitials } from "@/lib/utils";
 import { Plus, Phone, MessageSquare, Search, User, Activity, ChevronRight } from "lucide-react";
 import type { Patient, Prescription } from "@/types";
 
@@ -40,7 +41,7 @@ export default function PatientsPage() {
 
   const handleAddPatient = () => {
     if (!formName.trim()) { toast({ title: "Name required", variant: "destructive" }); return; }
-    const initials = formName.split(" ").map((w) => w[0]).join("").toUpperCase().substring(0, 2);
+    const initials = getInitials(formName);
     const newPatient: Patient = {
       id: `pat-${Date.now()}`, name: formName.trim(), initials, age: parseInt(formAge) || 0,
       condition: formCondition, phone: formPhone, language: formLanguage,

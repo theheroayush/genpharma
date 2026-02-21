@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { LayoutDashboard, Users, ScrollText, Menu, X, LogOut, ChevronLeft, Shield } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, getInitials } from "@/lib/utils";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 
@@ -84,7 +84,7 @@ export default function AdminLayout({ children }: Props) {
                     <div className="flex-1" />
                     <div className="flex items-center gap-2">
                         <div className="w-8 h-8 rounded-full bg-red-600/10 flex items-center justify-center text-red-600 font-bold text-xs">
-                            {profile?.full_name?.split(" ").map((w) => w[0]).join("").substring(0, 2) || "AD"}
+                            {getInitials(profile?.full_name, "AD")}
                         </div>
                         <span className="text-sm font-medium hidden sm:block">{profile?.full_name || "Admin"}</span>
                     </div>

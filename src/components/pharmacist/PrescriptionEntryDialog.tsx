@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/components/ui/use-toast";
 import { searchDrugs } from "@/data/drugDatabase";
+import { getInitials } from "@/lib/utils";
 import { Upload, Plus, X, Pill, Image as ImageIcon } from "lucide-react";
 import type { MedicationEntry, Prescription, TimeSlot } from "@/types";
 
@@ -112,7 +113,7 @@ export function PrescriptionEntryDialog({ open, onClose, onSave }: Props) {
         if (!patientName.trim()) { toast({ title: "Patient name required", variant: "destructive" }); return; }
         if (medications.length === 0) { toast({ title: "Add at least one medication", variant: "destructive" }); return; }
 
-        const initials = patientName.split(" ").map((w) => w[0]).join("").toUpperCase().substring(0, 2);
+        const initials = getInitials(patientName);
         const id = `RX-${Math.floor(1000 + Math.random() * 9000)}`;
         const now = new Date().toISOString();
 

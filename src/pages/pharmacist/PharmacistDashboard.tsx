@@ -1,4 +1,5 @@
 import { useAuth } from "@/hooks/useAuth";
+import { getInitials } from "@/lib/utils";
 
 export default function PharmacistDashboard() {
   const { profile } = useAuth();
@@ -88,7 +89,7 @@ export default function PharmacistDashboard() {
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
                       <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-sm">
-                        {rx.patient.split(" ").map(w => w[0]).join("")}
+                        {getInitials(rx.patient)}
                       </div>
                       <div>
                         <p className="font-semibold text-foreground text-sm">{rx.patient}</p>
@@ -118,7 +119,7 @@ export default function PharmacistDashboard() {
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-3">
                   <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xs">
-                    {rx.patient.split(" ").map(w => w[0]).join("")}
+                    {getInitials(rx.patient)}
                   </div>
                   <div>
                     <p className="font-semibold text-foreground text-sm">{rx.patient}</p>
