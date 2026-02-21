@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/components/ui/use-toast";
 import { searchDrugs } from "@/data/drugDatabase";
-import { Upload, Plus, X, Pill, Image as ImageIcon } from "lucide-react";
+import { Plus, X, Pill, Image as ImageIcon } from "lucide-react";
 import type { MedicationEntry, Prescription, TimeSlot } from "@/types";
 
 interface Props {

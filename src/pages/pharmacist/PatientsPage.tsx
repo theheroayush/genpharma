@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { useToast } from "@/components/ui/use-toast";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
-import { Plus, Phone, MessageSquare, Search, User, Activity, ChevronRight } from "lucide-react";
+import { Plus, Phone, MessageSquare, Search, User, Activity } from "lucide-react";
 import type { Patient, Prescription } from "@/types";
 
 export default function PatientsPage() {
