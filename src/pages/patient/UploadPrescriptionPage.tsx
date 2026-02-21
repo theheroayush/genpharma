@@ -25,7 +25,6 @@ export default function UploadPrescriptionPage() {
     const handleUpload = async () => {
         if (!file) return;
         setUploading(true);
-        await new Promise((r) => setTimeout(r, 2000));
         setUploading(false);
         setSuccess(true);
         toast({ title: "Prescription uploaded!", description: "Our pharmacist will review it shortly." });
