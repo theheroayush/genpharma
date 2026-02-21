@@ -40,16 +40,25 @@ export default function ReportsPage() {
     }));
   }, []);
 
-  // ─── Order Status Distribution ───
-  const statusDistribution = useMemo(() => {
+  // ─── Order Statistics (Status & Revenue) ───
+  const { statusDistribution, totalRevenue } = useMemo(() => {
     const counts = { Processing: 0, Assembled: 0, Shipped: 0, Delivered: 0 };
-    orders.forEach((o) => {
+    let revenue = 0;
+
+    for (const o of orders) {
+      // Status Distribution
       if (o.status === "processing") counts.Processing++;
       else if (o.status === "assembled") counts.Assembled++;
       else if (o.status === "shipped") counts.Shipped++;
       else if (o.status === "delivered") counts.Delivered++;
-    });
-    return Object.entries(counts).map(([name, value]) => ({ name, value: value || 1 }));
+
+      // Revenue Calculation
+      const num = parseInt(o.total.replace(/[^0-9]/g, "")) || 0;
+      revenue += num;
+    }
+
+    const distribution = Object.entries(counts).map(([name, value]) => ({ name, value: value || 1 }));
+    return { statusDistribution: distribution, totalRevenue: revenue };
   }, [orders]);
 
   // ─── Adherence Over Time ───
@@ -64,14 +73,6 @@ export default function ReportsPage() {
       target: 85,
     }));
   }, [patients]);
-
-  // ─── Summary Cards ───
-  const totalRevenue = useMemo(() => {
-    return orders.reduce((sum, o) => {
-      const num = parseInt(o.total.replace(/[^0-9]/g, "")) || 0;
-      return sum + num;
-    }, 0);
-  }, [orders]);
 
   const exportCSV = () => {
     const headers = ["Order ID", "Patient", "Status", "Total", "Date"];
