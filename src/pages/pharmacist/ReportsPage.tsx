@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { useOrders } from "@/contexts/OrderContext";
 import {
   BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, AreaChart, Area,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
@@ -14,7 +15,7 @@ const COLORS = ["#16a34a", "#2563eb", "#f59e0b", "#8b5cf6", "#ef4444", "#06b6d4"
 
 export default function ReportsPage() {
   const { toast } = useToast();
-  const [orders] = useLocalStorage<Order[]>("gp_orders", []);
+  const { orders } = useOrders();
   const [patients] = useLocalStorage<Patient[]>("gp_patients", []);
   const [prescriptions] = useLocalStorage<Prescription[]>("gp_prescriptions", []);
 

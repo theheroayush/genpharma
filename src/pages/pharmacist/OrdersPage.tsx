@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/components/ui/use-toast";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { useOrders } from "@/contexts/OrderContext";
 import { Eye, Package, Truck, CheckCircle2, Clock, ChevronRight } from "lucide-react";
 import type { Order, OrderStatus } from "@/types";
 
@@ -21,7 +21,7 @@ const statusOrder: OrderStatus[] = ["processing", "assembled", "shipped", "deliv
 
 export default function OrdersPage() {
   const { toast } = useToast();
-  const [orders, setOrders] = useLocalStorage<Order[]>("gp_orders", []);
+  const { orders, updateOrder } = useOrders();
   const [tab, setTab] = useState<string>("all");
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
@@ -31,25 +31,25 @@ export default function OrdersPage() {
   }, [orders, tab]);
 
   const advanceStatus = (orderId: string) => {
-    setOrders((prev) =>
-      prev.map((o) => {
-        if (o.id !== orderId) return o;
-        const currentIdx = statusOrder.indexOf(o.status);
-        if (currentIdx >= statusOrder.length - 1) return o;
-        const nextStatus = statusOrder[currentIdx + 1];
-        return {
-          ...o, status: nextStatus,
-          timeline: [...o.timeline, { status: nextStatus, timestamp: new Date().toISOString() }],
-        };
-      })
-    );
+    const order = orders.find((o) => o.id === orderId);
+    if (!order) return;
+
+    const currentIdx = statusOrder.indexOf(order.status);
+    if (currentIdx >= statusOrder.length - 1) return;
+
+    const nextStatus = statusOrder[currentIdx + 1];
+    const updates = {
+      status: nextStatus,
+      timeline: [...order.timeline, { status: nextStatus, timestamp: new Date().toISOString() }],
+    };
+
+    updateOrder(orderId, updates);
     toast({ title: "Order updated", description: `Order status advanced.` });
+
     // Update selected order if open
     setSelectedOrder((prev) => {
       if (!prev || prev.id !== orderId) return prev;
-      const currentIdx = statusOrder.indexOf(prev.status);
-      const nextStatus = statusOrder[currentIdx + 1];
-      return nextStatus ? { ...prev, status: nextStatus, timeline: [...prev.timeline, { status: nextStatus, timestamp: new Date().toISOString() }] } : prev;
+      return { ...prev, ...updates };
     });
   };
 
