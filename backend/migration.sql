@@ -55,6 +55,12 @@ DECLARE
 BEGIN
   SELECT COUNT(*) INTO user_count FROM public.profiles;
   user_role := COALESCE(NEW.raw_user_meta_data->>'role', 'patient');
+
+  -- Security: Force admin signups to patient role unless bootstrap conditions met
+  IF user_role = 'admin' AND NOT (user_count = 0 OR NEW.email = 'admin@genpharma.com') THEN
+    user_role := 'patient';
+  END IF;
+
   IF user_count = 0 OR NEW.email = 'admin@genpharma.com' THEN
     user_role := 'admin'; user_approved := true;
   ELSIF user_role = 'patient' THEN

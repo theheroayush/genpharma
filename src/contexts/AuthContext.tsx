@@ -63,6 +63,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
 
     const register = async (email: string, password: string, fullName: string, role: UserRole) => {
+        // Security check: Prevent client-side admin registration
+        if (role === "admin") return { error: "Cannot register as admin" };
+
         const { error } = await supabase.auth.signUp({
             email,
             password,
