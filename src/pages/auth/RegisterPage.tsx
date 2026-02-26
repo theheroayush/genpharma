@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/hooks/useAuth";
 import { motion } from "framer-motion";
+import { validatePassword } from "@/lib/validation";
 
 export default function RegisterPage() {
     const navigate = useNavigate();
@@ -22,7 +23,13 @@ export default function RegisterPage() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError("");
-        if (password.length < 6) { setError("Password must be at least 6 characters"); return; }
+
+        const validation = validatePassword(password);
+        if (!validation.isValid) {
+            setError(validation.error || "Invalid password");
+            return;
+        }
+
         setLoading(true);
         // Always register as patient — pharmacist/admin accounts are created by admin only
         const result = await register(email, password, name, "patient");
@@ -92,7 +99,7 @@ export default function RegisterPage() {
                             <div>
                                 <Label className="text-sm font-medium">Password</Label>
                                 <div className="relative mt-1.5">
-                                    <Input type={showPw ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Min 6 characters" required className="rounded-xl pr-10" />
+                                    <Input type={showPw ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Min 8 chars, A-Z, 0-9, symbol" required className="rounded-xl pr-10" />
                                     <button type="button" onClick={() => setShowPw(!showPw)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
                                         <span className="material-symbols-outlined" style={{ fontSize: 20 }}>{showPw ? "visibility_off" : "visibility"}</span>
                                     </button>
