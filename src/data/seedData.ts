@@ -121,9 +121,6 @@ export function initSeedData() {
     if (!localStorage.getItem("gp_inventory")) {
         localStorage.setItem("gp_inventory", JSON.stringify(seedInventory));
     }
-    if (!localStorage.getItem("gp_orders")) {
-        localStorage.setItem("gp_orders", JSON.stringify(seedOrders));
-    }
     if (!localStorage.getItem("gp_patients")) {
         localStorage.setItem("gp_patients", JSON.stringify(seedPatients));
     }

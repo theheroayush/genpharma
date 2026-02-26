@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useEffect } from "react";
 import { initSeedData } from "@/data/seedData";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { OrderProvider } from "@/contexts/OrderContext";
 import { useAuth } from "@/hooks/useAuth";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 
@@ -95,9 +96,11 @@ const App = () => (
     <TooltipProvider>
       <BrowserRouter>
         <AuthProvider>
-          <Toaster />
-          <Sonner />
-          <AppContent />
+          <OrderProvider>
+            <Toaster />
+            <Sonner />
+            <AppContent />
+          </OrderProvider>
         </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>

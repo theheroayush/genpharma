@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/components/ui/use-toast";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { useOrders } from "@/contexts/OrderContext";
 import { Eye, Package, Truck, CheckCircle2, Clock, ChevronRight } from "lucide-react";
 import type { Order, OrderStatus } from "@/types";
 
@@ -21,7 +21,7 @@ const statusOrder: OrderStatus[] = ["processing", "assembled", "shipped", "deliv
 
 export default function OrdersPage() {
   const { toast } = useToast();
-  const [orders, setOrders] = useLocalStorage<Order[]>("gp_orders", []);
+  const { orders, setOrders } = useOrders();
   const [tab, setTab] = useState<string>("all");
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
