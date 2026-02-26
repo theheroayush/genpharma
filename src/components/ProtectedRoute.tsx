@@ -25,8 +25,8 @@ export function ProtectedRoute({ children, allowedRoles }: Props) {
         return <Navigate to="/login" replace />;
     }
 
-    // Pharmacist pending approval
-    if (profile.role === "pharmacist" && !profile.approved) {
+    // Account pending approval
+    if ((profile.role === "pharmacist" || profile.role === "admin") && !profile.approved) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-background px-4">
                 <div className="max-w-md text-center space-y-4">
@@ -35,7 +35,7 @@ export function ProtectedRoute({ children, allowedRoles }: Props) {
                     </div>
                     <h2 className="text-2xl font-bold">Pending Approval</h2>
                     <p className="text-muted-foreground">
-                        Your pharmacist account is awaiting admin approval. You'll be notified once approved.
+                        Your {profile.role} account is awaiting approval. You'll be notified once approved.
                     </p>
                     <p className="text-sm text-muted-foreground">Email: {profile.email}</p>
                 </div>
