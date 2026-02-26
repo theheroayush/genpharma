@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -28,15 +28,17 @@ export default function AuditLogs() {
         })();
     }, []);
 
-    const actions = [...new Set(logs.map((l) => l.action))];
-    const searchTerm = search.trim().toLowerCase();
-    const filtered = logs.filter((l) => {
-        if (actionFilter !== "all" && l.action !== actionFilter) return false;
-        if (searchTerm) {
-            return (l.user_email || "").toLowerCase().includes(searchTerm) || l.action.toLowerCase().includes(searchTerm) || (l.details || "").toLowerCase().includes(searchTerm);
-        }
-        return true;
-    });
+    const actions = useMemo(() => [...new Set(logs.map((l) => l.action))], [logs]);
+    const filtered = useMemo(() => {
+        const searchTerm = search.trim().toLowerCase();
+        return logs.filter((l) => {
+            if (actionFilter !== "all" && l.action !== actionFilter) return false;
+            if (searchTerm) {
+                return (l.user_email || "").toLowerCase().includes(searchTerm) || l.action.toLowerCase().includes(searchTerm) || (l.details || "").toLowerCase().includes(searchTerm);
+            }
+            return true;
+        });
+    }, [logs, search, actionFilter]);
 
     const actionColor = (a: string) => {
         if (a.includes("login")) return "info";
