@@ -11,6 +11,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { Plus, Phone, MessageSquare, Search, User, Activity } from "lucide-react";
 import type { Patient, Prescription } from "@/types";
+import { SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE } from "@/lib/constants";
 
 export default function PatientsPage() {
   const { toast } = useToast();
@@ -27,7 +28,7 @@ export default function PatientsPage() {
   const [formAge, setFormAge] = useState("");
   const [formCondition, setFormCondition] = useState("");
   const [formPhone, setFormPhone] = useState("");
-  const [formLanguage, setFormLanguage] = useState("Hindi");
+  const [formLanguage, setFormLanguage] = useState<string>(DEFAULT_LANGUAGE);
   const [formNotes, setFormNotes] = useState("");
 
   const filtered = useMemo(() => {
@@ -50,7 +51,7 @@ export default function PatientsPage() {
     setPatients((prev) => [newPatient, ...prev]);
     toast({ title: "Patient added", description: newPatient.name });
     setShowAdd(false);
-    setFormName(""); setFormAge(""); setFormCondition(""); setFormPhone(""); setFormLanguage("Hindi"); setFormNotes("");
+    setFormName(""); setFormAge(""); setFormCondition(""); setFormPhone(""); setFormLanguage(DEFAULT_LANGUAGE); setFormNotes("");
   };
 
   const patientPrescriptions = useMemo(() => {
@@ -151,7 +152,7 @@ export default function PatientsPage() {
                 <Select value={formLanguage} onValueChange={setFormLanguage}>
                   <SelectTrigger><SelectValue /></SelectTrigger>
                   <SelectContent>
-                    {["Hindi", "English", "Gujarati", "Marathi", "Bengali", "Tamil", "Telugu", "Kannada", "Malayalam", "Punjabi"].map((l) => (
+                    {SUPPORTED_LANGUAGES.map((l) => (
                       <SelectItem key={l} value={l}>{l}</SelectItem>
                     ))}
                   </SelectContent>
