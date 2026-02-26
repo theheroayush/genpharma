@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/hooks/useAuth";
 import { motion } from "framer-motion";
+import { Pill, LogIn, AlertCircle, Eye, EyeOff, Loader2 } from "lucide-react";
 
 export default function LoginPage() {
     const navigate = useNavigate();
@@ -35,7 +36,7 @@ export default function LoginPage() {
                 <div className="text-center mb-8">
                     <Link to="/" className="inline-flex items-center gap-2.5 mb-4">
                         <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center">
-                            <span className="material-symbols-outlined text-primary" style={{ fontSize: 22 }}>local_pharmacy</span>
+                            <Pill className="h-6 w-6 text-primary" />
                         </div>
                         <span className="text-2xl font-bold text-foreground tracking-tight">GenPharma</span>
                     </Link>
@@ -45,7 +46,7 @@ export default function LoginPage() {
                 <Card className="rounded-2xl shadow-card border-border">
                     <CardHeader className="pb-4">
                         <CardTitle className="flex items-center gap-2 text-lg">
-                            <span className="material-symbols-outlined text-primary" style={{ fontSize: 22 }}>login</span>
+                            <LogIn className="h-5 w-5 text-primary" />
                             Welcome Back
                         </CardTitle>
                     </CardHeader>
@@ -53,25 +54,30 @@ export default function LoginPage() {
                         <form onSubmit={handleSubmit} className="space-y-4">
                             {error && (
                                 <div className="p-3 bg-destructive/10 text-destructive text-sm rounded-xl flex items-center gap-2">
-                                    <span className="material-symbols-outlined" style={{ fontSize: 18 }}>error</span>
+                                    <AlertCircle className="h-4 w-4" />
                                     {error}
                                 </div>
                             )}
                             <div>
-                                <Label className="text-sm font-medium">Email</Label>
-                                <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" required className="mt-1.5 rounded-xl" />
+                                <Label htmlFor="email" className="text-sm font-medium">Email</Label>
+                                <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" required className="mt-1.5 rounded-xl" />
                             </div>
                             <div>
-                                <Label className="text-sm font-medium">Password</Label>
+                                <Label htmlFor="password" className="text-sm font-medium">Password</Label>
                                 <div className="relative mt-1.5">
-                                    <Input type={showPw ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" required className="rounded-xl pr-10" />
-                                    <button type="button" onClick={() => setShowPw(!showPw)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
-                                        <span className="material-symbols-outlined" style={{ fontSize: 20 }}>{showPw ? "visibility_off" : "visibility"}</span>
+                                    <Input id="password" type={showPw ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" required className="rounded-xl pr-10" />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowPw(!showPw)}
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                                        aria-label={showPw ? "Hide password" : "Show password"}
+                                    >
+                                        {showPw ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                                     </button>
                                 </div>
                             </div>
                             <Button type="submit" className="w-full rounded-xl h-11 text-base font-semibold" disabled={loading}>
-                                {loading ? <div className="h-5 w-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : "Sign In"}
+                                {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : "Sign In"}
                             </Button>
                         </form>
                         <p className="mt-5 text-center text-sm text-muted-foreground">
