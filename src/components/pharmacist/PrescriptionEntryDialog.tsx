@@ -168,8 +168,17 @@ export function PrescriptionEntryDialog({ open, onClose, onSave }: Props) {
                     <div>
                         <Label>Prescription Image (optional)</Label>
                         <div
+                            role="button"
+                            tabIndex={0}
+                            aria-label="Upload prescription image"
                             onClick={() => fileRef.current?.click()}
-                            className="mt-1 border-2 border-dashed rounded-lg p-6 text-center cursor-pointer hover:border-primary/60 transition-colors"
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter" || e.key === " ") {
+                                    e.preventDefault();
+                                    fileRef.current?.click();
+                                }
+                            }}
+                            className="mt-1 border-2 border-dashed rounded-lg p-6 text-center cursor-pointer hover:border-primary/60 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                         >
                             {imageUrl ? (
                                 <img src={imageUrl} alt="Prescription" className="mx-auto max-h-48 rounded-lg object-contain" />
@@ -275,7 +284,12 @@ export function PrescriptionEntryDialog({ open, onClose, onSave }: Props) {
                                             ))}
                                         </div>
                                     </div>
-                                    <Button variant="ghost" size="icon" onClick={() => removeMedication(i)}>
+                                    <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        onClick={() => removeMedication(i)}
+                                        aria-label="Remove medication"
+                                    >
                                         <X className="h-4 w-4 text-destructive" />
                                     </Button>
                                 </div>
