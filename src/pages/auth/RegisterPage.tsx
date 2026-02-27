@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/hooks/useAuth";
 import { motion } from "framer-motion";
+import { validatePassword } from "@/lib/validation";
 
 export default function RegisterPage() {
     const navigate = useNavigate();
@@ -22,7 +23,13 @@ export default function RegisterPage() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError("");
-        if (password.length < 6) { setError("Password must be at least 6 characters"); return; }
+
+        const validation = validatePassword(password);
+        if (!validation.isValid) {
+            setError(validation.error || "Invalid password");
+            return;
+        }
+
         setLoading(true);
         // Always register as patient — pharmacist/admin accounts are created by admin only
         const result = await register(email, password, name, "patient");
