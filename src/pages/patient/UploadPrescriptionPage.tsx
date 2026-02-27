@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
+import React from "react";
 
 interface UploadedRx {
     id: string;
@@ -17,6 +18,7 @@ export default function UploadPrescriptionPage() {
     const [preview, setPreview] = useState<string | null>(null);
     const [uploading, setUploading] = useState(false);
     const [success, setSuccess] = useState(false);
+    const [isDragging, setIsDragging] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
     const navigate = useNavigate();
     const { toast } = useToast();
@@ -40,6 +42,47 @@ export default function UploadPrescriptionPage() {
             reader.readAsDataURL(f);
         } else {
             setPreview(null); // PDF has no image preview
+        }
+    };
+
+    const handleDragEnter = (e: React.DragEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setIsDragging(true);
+    };
+
+    const handleDragLeave = (e: React.DragEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        // Check if we are dragging leaving the container to an external element,
+        // or just into a child element.
+        if (e.currentTarget.contains(e.relatedTarget as Node)) {
+            return;
+        }
+
+        setIsDragging(false);
+    };
+
+    const handleDragOver = (e: React.DragEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (!isDragging) setIsDragging(true);
+    };
+
+    const handleDrop = (e: React.DragEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setIsDragging(false);
+        if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+            handleFile(e.dataTransfer.files[0]);
+        }
+    };
+
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            inputRef.current?.click();
         }
     };
 
@@ -105,15 +148,31 @@ export default function UploadPrescriptionPage() {
                         </div>
                     ) : (
                         <div
-                            className="bg-slate-800 rounded-xl overflow-hidden relative flex items-center justify-center cursor-pointer"
+                            role="button"
+                            tabIndex={0}
+                            aria-label="Upload prescription area"
+                            className={`rounded-xl overflow-hidden relative flex items-center justify-center cursor-pointer transition-all duration-200 outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ${
+                                isDragging
+                                    ? "bg-primary/10 border-2 border-primary border-dashed"
+                                    : "bg-slate-800 border-2 border-transparent"
+                            }`}
                             style={{ minHeight: 300 }}
                             onClick={() => inputRef.current?.click()}
-                            onDragOver={(e) => e.preventDefault()}
-                            onDrop={(e) => { e.preventDefault(); if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]); }}
+                            onKeyDown={handleKeyDown}
+                            onDragEnter={handleDragEnter}
+                            onDragLeave={handleDragLeave}
+                            onDragOver={handleDragOver}
+                            onDrop={handleDrop}
                         >
-                            <div className="absolute inset-6 md:inset-10 border-2 border-dashed border-blue-400/40 rounded-xl flex flex-col items-center justify-center gap-3">
-                                <span className="material-symbols-outlined text-blue-300" style={{ fontSize: 48 }}>add_a_photo</span>
-                                <p className="text-slate-300 text-sm font-medium">Tap to capture or upload</p>
+                            <div className={`absolute inset-6 md:inset-10 border-2 border-dashed rounded-xl flex flex-col items-center justify-center gap-3 transition-colors pointer-events-none ${
+                                isDragging ? "border-primary/50" : "border-blue-400/40"
+                            }`}>
+                                <span className={`material-symbols-outlined transition-colors ${isDragging ? "text-primary" : "text-blue-300"}`} style={{ fontSize: 48 }}>
+                                    {isDragging ? "upload_file" : "add_a_photo"}
+                                </span>
+                                <p className={`text-sm font-medium transition-colors ${isDragging ? "text-primary" : "text-slate-300"}`}>
+                                    {isDragging ? "Drop to upload" : "Tap to capture or upload"}
+                                </p>
                                 <p className="text-slate-500 text-xs">Supports JPG, PNG, PDF (max 10MB)</p>
                             </div>
                         </div>
