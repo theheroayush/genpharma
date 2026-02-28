@@ -42,10 +42,10 @@ export default function AdminLayout({ children }: Props) {
                     ))}
                 </nav>
                 <div className="border-t border-border p-3 space-y-2">
-                    <button onClick={handleLogout} className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
+                    <button onClick={handleLogout} className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-muted-foreground hover:bg-muted hover:text-foreground transition-colors" aria-label="Logout">
                         <LogOut size={18} />{!collapsed && <span>Logout</span>}
                     </button>
-                    <button onClick={() => setCollapsed(!collapsed)} className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-sm text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
+                    <button onClick={() => setCollapsed(!collapsed)} aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"} className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-sm text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
                         <ChevronLeft size={18} className={cn("transition-transform", collapsed && "rotate-180")} />{!collapsed && <span>Collapse</span>}
                     </button>
                 </div>
@@ -59,7 +59,7 @@ export default function AdminLayout({ children }: Props) {
                         <motion.aside initial={{ x: -280 }} animate={{ x: 0 }} exit={{ x: -280 }} transition={{ type: "spring", damping: 25, stiffness: 300 }} className="fixed left-0 top-0 bottom-0 w-[260px] bg-card border-r border-border z-50 lg:hidden flex flex-col">
                             <div className="h-16 flex items-center justify-between px-4 border-b border-border">
                                 <span className="font-display text-lg">Admin Panel</span>
-                                <button onClick={() => setMobileOpen(false)}><X size={22} /></button>
+                                <button onClick={() => setMobileOpen(false)} aria-label="Close mobile menu"><X size={22} /></button>
                             </div>
                             <nav className="flex-1 py-4 px-3 space-y-1">
                                 {navItems.map((item) => (
@@ -69,7 +69,7 @@ export default function AdminLayout({ children }: Props) {
                                 ))}
                             </nav>
                             <div className="border-t border-border p-4">
-                                <button onClick={handleLogout} className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-muted-foreground hover:bg-muted">
+                                <button onClick={handleLogout} className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-muted-foreground hover:bg-muted" aria-label="Logout">
                                     <LogOut size={18} /><span>Logout</span>
                                 </button>
                             </div>
@@ -80,7 +80,7 @@ export default function AdminLayout({ children }: Props) {
 
             <div className="flex-1 flex flex-col min-w-0">
                 <header className="sticky top-0 z-30 h-16 bg-card/80 backdrop-blur-lg border-b border-border flex items-center px-4 lg:px-6 gap-4">
-                    <button className="lg:hidden" onClick={() => setMobileOpen(true)}><Menu size={22} /></button>
+                    <button className="lg:hidden" onClick={() => setMobileOpen(true)} aria-label="Open mobile menu"><Menu size={22} /></button>
                     <div className="flex-1" />
                     <div className="flex items-center gap-2">
                         <div className="w-8 h-8 rounded-full bg-red-600/10 flex items-center justify-center text-red-600 font-bold text-xs">

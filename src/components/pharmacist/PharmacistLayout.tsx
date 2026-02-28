@@ -57,11 +57,11 @@ export default function PharmacistLayout({ children }: Props) {
               </div>
             </div>
           )}
-          <button onClick={handleLogout} className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm text-muted-foreground hover:bg-red-50 hover:text-red-600 transition-colors">
+          <button onClick={handleLogout} className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm text-muted-foreground hover:bg-red-50 hover:text-red-600 transition-colors" aria-label="Logout">
             <span className="material-symbols-outlined" style={{ fontSize: 18 }}>logout</span>
             {!collapsed && <span>Logout</span>}
           </button>
-          <button onClick={() => setCollapsed(!collapsed)} className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-sm text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
+          <button onClick={() => setCollapsed(!collapsed)} aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"} className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-sm text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
             <span className={cn("material-symbols-outlined transition-transform", collapsed && "rotate-180")} style={{ fontSize: 18 }}>chevron_left</span>
             {!collapsed && <span>Collapse</span>}
           </button>
@@ -70,7 +70,7 @@ export default function PharmacistLayout({ children }: Props) {
 
       {/* Mobile header + overlay */}
       <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-white border-b border-border h-14 flex items-center px-4 justify-between">
-        <button onClick={() => setMobileOpen(true)} className="p-2 text-foreground">
+        <button onClick={() => setMobileOpen(true)} aria-label="Open mobile menu" className="p-2 text-foreground">
           <span className="material-symbols-outlined" style={{ fontSize: 24 }}>menu</span>
         </button>
         <div className="flex items-center gap-2">
@@ -79,7 +79,7 @@ export default function PharmacistLayout({ children }: Props) {
           </div>
           <span className="text-lg font-bold text-foreground">GenPharma</span>
         </div>
-        <button onClick={handleLogout} className="p-2 text-muted-foreground hover:text-red-500 transition-colors">
+        <button onClick={handleLogout} className="p-2 text-muted-foreground hover:text-red-500 transition-colors" aria-label="Logout">
           <span className="material-symbols-outlined" style={{ fontSize: 22 }}>logout</span>
         </button>
       </div>
@@ -96,7 +96,7 @@ export default function PharmacistLayout({ children }: Props) {
                 </div>
                 <span className="text-lg font-bold text-foreground">GenPharma</span>
               </div>
-              <button onClick={() => setMobileOpen(false)} className="p-2 text-foreground">
+              <button onClick={() => setMobileOpen(false)} aria-label="Close mobile menu" className="p-2 text-foreground">
                 <span className="material-symbols-outlined" style={{ fontSize: 24 }}>close</span>
               </button>
             </div>
@@ -120,7 +120,7 @@ export default function PharmacistLayout({ children }: Props) {
                   <p className="text-xs text-muted-foreground">Pharmacist</p>
                 </div>
               </div>
-              <button onClick={() => { handleLogout(); setMobileOpen(false); }} className="w-full flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm text-red-500 hover:bg-red-50 transition-colors">
+              <button onClick={() => { handleLogout(); setMobileOpen(false); }} aria-label="Logout" className="w-full flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm text-red-500 hover:bg-red-50 transition-colors">
                 <span className="material-symbols-outlined" style={{ fontSize: 18 }}>logout</span>
                 Logout
               </button>
