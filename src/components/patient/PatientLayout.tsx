@@ -57,7 +57,7 @@ export default function PatientLayout({ children }: Props) {
 
                     {/* Right actions */}
                     <div className="flex items-center gap-2">
-                        <button className="relative p-2 text-muted-foreground hover:bg-muted rounded-full transition-colors">
+                        <button className="relative p-2 text-muted-foreground hover:bg-muted rounded-full transition-colors" aria-label="Notifications">
                             <span className="material-symbols-outlined" style={{ fontSize: 22 }}>notifications</span>
                             <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white" />
                         </button>
@@ -70,7 +70,7 @@ export default function PatientLayout({ children }: Props) {
                         </button>
 
                         {/* Mobile hamburger */}
-                        <button className="md:hidden p-2 text-foreground" onClick={() => setMobileOpen(!mobileOpen)}>
+                        <button className="md:hidden p-2 text-foreground" onClick={() => setMobileOpen(!mobileOpen)} aria-label="Toggle mobile menu">
                             <span className="material-symbols-outlined" style={{ fontSize: 24 }}>{mobileOpen ? "close" : "menu"}</span>
                         </button>
                     </div>
