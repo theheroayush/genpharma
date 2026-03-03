@@ -122,10 +122,10 @@ export default function PatientsPage() {
                 <div className="mt-3 flex items-center justify-between">
                   <span className="text-xs text-muted-foreground">Last: {patient.lastOrder}</span>
                   <div className="flex gap-1">
-                    <Button variant="outline" size="icon" className="h-7 w-7" onClick={(e) => { e.stopPropagation(); setShowCall(patient); }}>
+                    <Button variant="outline" size="icon" className="h-7 w-7" aria-label="Call patient" onClick={(e) => { e.stopPropagation(); setShowCall(patient); }}>
                       <Phone className="h-3 w-3" />
                     </Button>
-                    <Button variant="outline" size="icon" className="h-7 w-7" onClick={(e) => { e.stopPropagation(); setShowMessage(patient); }}>
+                    <Button variant="outline" size="icon" className="h-7 w-7" aria-label="Message patient" onClick={(e) => { e.stopPropagation(); setShowMessage(patient); }}>
                       <MessageSquare className="h-3 w-3" />
                     </Button>
                   </div>
