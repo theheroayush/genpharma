@@ -54,13 +54,11 @@ DECLARE
   user_approved BOOLEAN;
 BEGIN
   SELECT COUNT(*) INTO user_count FROM public.profiles;
-  user_role := COALESCE(NEW.raw_user_meta_data->>'role', 'patient');
+  user_role := 'patient';
   IF user_count = 0 OR NEW.email = 'admin@genpharma.com' THEN
     user_role := 'admin'; user_approved := true;
-  ELSIF user_role = 'patient' THEN
-    user_approved := true;
   ELSE
-    user_approved := false;
+    user_approved := true;
   END IF;
   INSERT INTO public.profiles (id, full_name, email, role, approved)
   VALUES (NEW.id, COALESCE(NEW.raw_user_meta_data->>'full_name', ''), COALESCE(NEW.email, ''), user_role, user_approved);
