@@ -54,7 +54,7 @@ DECLARE
   user_approved BOOLEAN;
 BEGIN
   SELECT COUNT(*) INTO user_count FROM public.profiles;
-  user_role := COALESCE(NEW.raw_user_meta_data->>'role', 'patient');
+  user_role := 'patient'; -- Prevent privilege escalation via client metadata
   IF user_count = 0 OR NEW.email = 'admin@genpharma.com' THEN
     user_role := 'admin'; user_approved := true;
   ELSIF user_role = 'patient' THEN
