@@ -1,0 +1,4 @@
+## 2024-05-24 - Privilege Escalation via Supabase raw_user_meta_data
+**Vulnerability:** The Supabase `auth.users` trigger for creating user profiles (`handle_new_user` in `backend/migration.sql`) trusted the `NEW.raw_user_meta_data->>'role'` property sent from the client.
+**Learning:** During signup, a malicious user could craft an API request (or tamper with the frontend `signUp` payload) to include `{ role: 'admin' }` in the user metadata. Because the backend trigger directly copied this metadata into the `profiles` table, the user could instantly gain admin privileges without authorization.
+**Prevention:** Never trust client-provided metadata for critical security fields like roles or permissions. Always hardcode safe defaults (e.g., `'patient'`) in backend triggers, or use secure administrative RPCs to assign privileged roles.
