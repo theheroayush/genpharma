@@ -54,7 +54,14 @@ DECLARE
   user_approved BOOLEAN;
 BEGIN
   SELECT COUNT(*) INTO user_count FROM public.profiles;
+
+  -- Sentinel Security Fix: Sanitize user-provided role
+  -- raw_user_meta_data is client-controllable. Do not trust it for critical roles like 'admin'.
   user_role := COALESCE(NEW.raw_user_meta_data->>'role', 'patient');
+  IF user_role NOT IN ('patient', 'pharmacist') THEN
+    user_role := 'patient';
+  END IF;
+
   IF user_count = 0 OR NEW.email = 'admin@genpharma.com' THEN
     user_role := 'admin'; user_approved := true;
   ELSIF user_role = 'patient' THEN

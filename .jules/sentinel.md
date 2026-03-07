@@ -1,0 +1,4 @@
+## 2024-05-24 - Privilege Escalation via Supabase raw_user_meta_data
+**Vulnerability:** Unauthenticated users could register with `role: 'admin'` in their `raw_user_meta_data`. The backend trigger `handle_new_user` blindly trusted this input. While it set `approved = false`, the application's RPC functions and RLS policies only checked `role = 'admin'`, allowing unapproved admins to execute administrative actions like `admin_approve_user` on themselves.
+**Learning:** `raw_user_meta_data` is client-controllable and must NEVER be trusted for critical roles or permissions, even if paired with an `approved = false` flag, if the system's authorization checks do not explicitly enforce the `approved = true` requirement.
+**Prevention:** Actively sanitize user-provided metadata in database triggers. Explicitly restrict the roles users can request (e.g., `patient` or `pharmacist`) and discard any unauthorized requests (like `admin`) before processing.
