@@ -32,8 +32,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     useEffect(() => {
         if (!isSupabaseConfigured) {
             setState({
-                user: { id: "demo-user" } as User,
-                profile: demoProfile,
+                user: null,
+                profile: null,
                 session: null,
                 loading: false,
             });
