@@ -22,7 +22,14 @@ export default function RegisterPage() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError("");
-        if (password.length < 6) { setError("Password must be at least 6 characters"); return; }
+
+        // Security Enhancement: Strong Password Requirements
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;
+        if (!passwordRegex.test(password)) {
+            setError("Password must be at least 8 characters and include uppercase, lowercase, number, and special character.");
+            return;
+        }
+
         setLoading(true);
         // Always register as patient — pharmacist/admin accounts are created by admin only
         const result = await register(email, password, name, "patient");
@@ -92,7 +99,7 @@ export default function RegisterPage() {
                             <div>
                                 <Label className="text-sm font-medium">Password</Label>
                                 <div className="relative mt-1.5">
-                                    <Input type={showPw ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Min 6 characters" required className="rounded-xl pr-10" />
+                                    <Input type={showPw ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Min 8 chars, 1 uppercase, 1 number, 1 special char" required className="rounded-xl pr-10" />
                                     <button type="button" onClick={() => setShowPw(!showPw)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
                                         <span className="material-symbols-outlined" style={{ fontSize: 20 }}>{showPw ? "visibility_off" : "visibility"}</span>
                                     </button>
