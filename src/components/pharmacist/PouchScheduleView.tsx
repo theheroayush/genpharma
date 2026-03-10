@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Printer, Calendar } from "lucide-react";
 import type { Prescription, DaySchedule, TimeSlot } from "@/types";
+import { escapeHtml } from "@/lib/utils";
 
 interface Props {
     open: boolean;
@@ -57,7 +58,7 @@ export function PouchScheduleView({ open, onClose, prescription }: Props) {
         const printWindow = window.open("", "_blank");
         if (!printWindow) return;
         printWindow.document.write(`
-      <html><head><title>Labels — ${prescription?.patientName}</title>
+      <html><head><title>Labels — ${escapeHtml(prescription?.patientName)}</title>
       <style>
         body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; padding: 20px; }
         .label { border: 2px solid #333; border-radius: 8px; padding: 12px; margin: 8px; page-break-inside: avoid; width: 280px; display: inline-block; font-size: 12px; }
@@ -70,16 +71,16 @@ export function PouchScheduleView({ open, onClose, prescription }: Props) {
         @media print { body { padding: 0; } .label { border-width: 1px; } }
       </style></head><body>
       <h2>GenPharma — Medication Labels</h2>
-      <p>Patient: <strong>${prescription?.patientName}</strong> | Generated: ${new Date().toLocaleDateString("en-IN")}</p>
+      <p>Patient: <strong>${escapeHtml(prescription?.patientName)}</strong> | Generated: ${escapeHtml(new Date().toLocaleDateString("en-IN"))}</p>
       <hr/>
       ${schedule.map((day) =>
             slotOrder.map((slot) => {
                 const items = day[slot];
                 if (items.length === 0) return "";
                 return `<div class="label">
-            <div class="patient">${prescription?.patientName} (${prescription?.patientInitials})</div>
-            <h3>${day.date} — ${slotLabels[slot].emoji} ${slotLabels[slot].label} (${slotLabels[slot].time})</h3>
-            <div class="meds">${items.map((it) => `<div class="med">💊 ${it.drugName} — ${it.dosage}</div>`).join("")}</div>
+            <div class="patient">${escapeHtml(prescription?.patientName)} (${escapeHtml(prescription?.patientInitials)})</div>
+            <h3>${escapeHtml(day.date)} — ${escapeHtml(slotLabels[slot].emoji)} ${escapeHtml(slotLabels[slot].label)} (${escapeHtml(slotLabels[slot].time)})</h3>
+            <div class="meds">${items.map((it) => `<div class="med">💊 ${escapeHtml(it.drugName)} — ${escapeHtml(it.dosage)}</div>`).join("")}</div>
             <div style="display:flex;justify-content:space-between;align-items:center;">
               <span style="font-size:10px;color:#888;">GenPharma™</span>
               <div class="qr">QR</div>
