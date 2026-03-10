@@ -275,7 +275,7 @@ export function PrescriptionEntryDialog({ open, onClose, onSave }: Props) {
                                             ))}
                                         </div>
                                     </div>
-                                    <Button variant="ghost" size="icon" onClick={() => removeMedication(i)}>
+                                    <Button aria-label="Remove medication" variant="ghost" size="icon" onClick={() => removeMedication(i)}>
                                         <X className="h-4 w-4 text-destructive" />
                                     </Button>
                                 </div>
