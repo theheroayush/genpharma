@@ -1,4 +1,6 @@
 import { useAuth } from "@/hooks/useAuth";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+import type { Prescription, Order } from "@/types";
 
 export default function PharmacistDashboard() {
   const { profile } = useAuth();
@@ -6,19 +8,65 @@ export default function PharmacistDashboard() {
   const hour = new Date().getHours();
   const greeting = hour < 12 ? "Good Morning" : hour < 17 ? "Good Afternoon" : "Good Evening";
 
+  const [fetchedPrescriptions] = useLocalStorage<Prescription[]>("gp_prescriptions", []);
+  const [fetchedOrders] = useLocalStorage<Order[]>("gp_orders", []);
+
+  // Calculate stats
+  const pendingPrescriptions = fetchedPrescriptions.filter(p => ["pending", "ocr_completed"].includes(p.status));
+  const verifiedPrescriptions = fetchedPrescriptions.filter(p => p.status === "verified");
+  const pendingDeliveries = fetchedOrders.filter(o => ["processing", "assembled", "shipped"].includes(o.status));
+
+  // Mock urgent count (e.g. 20% of pending)
+  const urgentCount = Math.ceil(pendingPrescriptions.length * 0.2);
+
   const stats = [
-    { label: "Prescriptions to Process", value: "12", badge: "3 Urgent", badgeColor: "bg-red-100 text-red-700", icon: "description", iconColor: "text-orange-500 bg-orange-100" },
-    { label: "Packs to Assemble", value: "8", badge: "4 Ready", badgeColor: "bg-green-100 text-green-700", icon: "package_2", iconColor: "text-primary bg-primary/10" },
-    { label: "Pending Deliveries", value: "5", badge: "2 Today", badgeColor: "bg-blue-100 text-blue-700", icon: "local_shipping", iconColor: "text-emerald-600 bg-emerald-100" },
+    {
+      label: "Prescriptions to Process",
+      value: pendingPrescriptions.length.toString(),
+      badge: `${urgentCount} Urgent`,
+      badgeColor: "bg-red-100 text-red-700",
+      icon: "description",
+      iconColor: "text-orange-500 bg-orange-100"
+    },
+    {
+      label: "Packs to Assemble",
+      value: verifiedPrescriptions.length.toString(),
+      badge: `${verifiedPrescriptions.length} Ready`,
+      badgeColor: "bg-green-100 text-green-700",
+      icon: "package_2",
+      iconColor: "text-primary bg-primary/10"
+    },
+    {
+      label: "Pending Deliveries",
+      value: pendingDeliveries.length.toString(),
+      badge: `${pendingDeliveries.length} Active`,
+      badgeColor: "bg-blue-100 text-blue-700",
+      icon: "local_shipping",
+      iconColor: "text-emerald-600 bg-emerald-100"
+    },
   ];
 
-  const prescriptions = [
-    { id: "#RX-10293", patient: "Rajesh Kumar", age: 54, meds: 3, date: "Oct 24, 2023", status: "Pending Review", statusColor: "bg-amber-100 text-amber-700" },
-    { id: "#RX-10294", patient: "Priya Sharma", age: 62, meds: 5, date: "Oct 24, 2023", status: "In Progress", statusColor: "bg-blue-100 text-blue-700" },
-    { id: "#RX-10295", patient: "Sunil Patel", age: 45, meds: 2, date: "Oct 23, 2023", status: "Completed", statusColor: "bg-green-100 text-green-700" },
-    { id: "#RX-10296", patient: "Meena Devi", age: 70, meds: 4, date: "Oct 23, 2023", status: "Pending Review", statusColor: "bg-amber-100 text-amber-700" },
-    { id: "#RX-10297", patient: "Arun Singh", age: 58, meds: 3, date: "Oct 22, 2023", status: "Completed", statusColor: "bg-green-100 text-green-700" },
-  ];
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "assembled": return "bg-green-100 text-green-700";
+      case "verified": return "bg-blue-100 text-blue-700";
+      case "pending": return "bg-amber-100 text-amber-700";
+      case "ocr_completed": return "bg-purple-100 text-purple-700";
+      case "on_hold": return "bg-red-100 text-red-700";
+      default: return "bg-gray-100 text-gray-700";
+    }
+  };
+
+  const prescriptions = fetchedPrescriptions.map(rx => ({
+    id: rx.id,
+    patient: rx.patientName,
+    age: rx.patientAge,
+    meds: rx.medications.length,
+    date: new Date(rx.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
+    status: rx.status.replace("_", " ").replace(/\b\w/g, l => l.toUpperCase()),
+    statusColor: getStatusColor(rx.status),
+    rawStatus: rx.status // kept for button logic
+  }));
 
   return (
     <div>
@@ -27,7 +75,7 @@ export default function PharmacistDashboard() {
         <div className="relative z-10">
           <p className="text-blue-200 font-medium">{greeting},</p>
           <h1 className="text-2xl md:text-4xl font-bold mt-1">Dr. {firstName}</h1>
-          <p className="text-blue-100 mt-2 max-w-lg">You have <span className="font-bold text-white">12 prescriptions</span> to process and <span className="font-bold text-white">3 urgent</span> items today.</p>
+          <p className="text-blue-100 mt-2 max-w-lg">You have <span className="font-bold text-white">{pendingPrescriptions.length} prescriptions</span> to process and <span className="font-bold text-white">{urgentCount} urgent</span> items today.</p>
         </div>
         <div className="absolute -right-8 -bottom-8 opacity-10">
           <span className="material-symbols-outlined" style={{ fontSize: 180 }}>medical_services</span>
@@ -102,11 +150,18 @@ export default function PharmacistDashboard() {
                   <td className="px-6 py-4"><span className={`text-xs font-bold px-2.5 py-1 rounded-full ${rx.statusColor}`}>{rx.status}</span></td>
                   <td className="px-6 py-4 text-right">
                     <button className="text-primary text-sm font-semibold hover:underline">
-                      {rx.status === "Completed" ? "View" : "Process →"}
+                      {rx.rawStatus === "assembled" ? "View" : "Process →"}
                     </button>
                   </td>
                 </tr>
               ))}
+              {prescriptions.length === 0 && (
+                <tr>
+                  <td colSpan={6} className="px-6 py-8 text-center text-muted-foreground">
+                    No prescriptions found.
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
@@ -129,17 +184,22 @@ export default function PharmacistDashboard() {
               </div>
               <div className="flex items-center justify-between text-xs text-muted-foreground">
                 <span>{rx.meds} medicines • {rx.date}</span>
-                <button className="text-primary font-semibold">{rx.status === "Completed" ? "View" : "Process →"}</button>
+                <button className="text-primary font-semibold">{rx.rawStatus === "assembled" ? "View" : "Process →"}</button>
               </div>
             </div>
           ))}
+          {prescriptions.length === 0 && (
+            <div className="p-8 text-center text-muted-foreground">
+              No prescriptions found.
+            </div>
+          )}
         </div>
 
         <div className="px-6 py-4 border-t border-border flex items-center justify-between">
-          <p className="text-sm text-muted-foreground">Showing 5 of 24 prescriptions</p>
+          <p className="text-sm text-muted-foreground">Showing {prescriptions.length} of {prescriptions.length} prescriptions</p>
           <div className="flex gap-2">
-            <button className="px-3 py-1.5 border border-border rounded-lg text-sm font-medium hover:bg-muted transition-colors">Previous</button>
-            <button className="px-3 py-1.5 bg-primary text-white rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors">Next</button>
+            <button className="px-3 py-1.5 border border-border rounded-lg text-sm font-medium hover:bg-muted transition-colors" disabled>Previous</button>
+            <button className="px-3 py-1.5 bg-primary text-white rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors" disabled>Next</button>
           </div>
         </div>
       </div>
