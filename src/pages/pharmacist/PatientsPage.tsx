@@ -88,7 +88,7 @@ export default function PatientsPage() {
 
         <div className="relative sm:max-w-xs">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Search patients..." className="pl-9" />
+          <Input aria-label="Search patients" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Search patients..." className="pl-9" />
         </div>
 
         {/* ─── Patient Cards ─── */}
@@ -122,10 +122,10 @@ export default function PatientsPage() {
                 <div className="mt-3 flex items-center justify-between">
                   <span className="text-xs text-muted-foreground">Last: {patient.lastOrder}</span>
                   <div className="flex gap-1">
-                    <Button variant="outline" size="icon" className="h-7 w-7" onClick={(e) => { e.stopPropagation(); setShowCall(patient); }}>
+                    <Button aria-label={`Call ${patient.name}`} variant="outline" size="icon" className="h-7 w-7" onClick={(e) => { e.stopPropagation(); setShowCall(patient); }}>
                       <Phone className="h-3 w-3" />
                     </Button>
-                    <Button variant="outline" size="icon" className="h-7 w-7" onClick={(e) => { e.stopPropagation(); setShowMessage(patient); }}>
+                    <Button aria-label={`Message ${patient.name}`} variant="outline" size="icon" className="h-7 w-7" onClick={(e) => { e.stopPropagation(); setShowMessage(patient); }}>
                       <MessageSquare className="h-3 w-3" />
                     </Button>
                   </div>
