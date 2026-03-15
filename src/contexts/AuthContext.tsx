@@ -9,7 +9,7 @@ const demoProfile: Profile = {
     id: "demo-user",
     full_name: "Rajesh Kumar",
     email: "rajesh@example.com",
-    role: "patient",
+    role: "pharmacist",
     approved: true,
     phone: "+91 98765 43210",
     created_at: new Date().toISOString(),
